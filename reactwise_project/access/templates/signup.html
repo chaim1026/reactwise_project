@@ -1,0 +1,62 @@
+{% extends 'access_base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Signup</h1>
+    <form method="POST">
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        <label for="id_first_name">First name:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="first_name" maxlength="150" id="id_first_name">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_last_name">Last name:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="last_name" maxlength="150" id="id_last_name">
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_username">Username:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="username" maxlength="150" autofocus="" required="" id="id_username"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_email">Email address:</label>
+                    </th>
+                    <td>
+                        <input type="email" name="email" maxlength="254" id="id_email"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_password1">Password:</label>
+                    </th>
+                    <td>
+                        <input type="password" name="password1" autocomplete="new-password" required="" id="id_password1"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label for="id_password2">Password confirmation:</label>
+                    </th>
+                    <td>
+                        <input type="password" name="password2" autocomplete="new-password" required="" id="id_password2"><br>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% csrf_token %}
+        <button type="submit">Signup</button>
+    </form>
+{% endblock content %}

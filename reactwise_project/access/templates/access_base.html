@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reatwise</title>
+    <link href="{% static 'access_style.css' %}" rel="stylesheet" type="text/css">
+</head>
+<body>
+    
+    <div id="particles-js">
+        <div id="login">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    particlesJS.load('particles-js', "{% static 'particle.json' %}", function() {
+    console.log('particles.js loaded');
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{% extends 'budget_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 style="text-align: center; color: aqua; font-size: 60px; margin-top: 50px;">WELCOME {{user.first_name|upper}} TO REACTWISE</h1>
+<img src="{% static 'robot.gif' %}" alt="waving robot">
+<h1 style="text-align: center;">CLICK ME FOR HELP</h1>
+<div style="text-align: center; margin-top: 100px;">
+    <a href="{% url 'daily' %}" type="button" class="btn btn-outline-info btn_style">DAILY</a>
+    <a href="{% url 'monthly' %}" type="button" class="btn btn-outline-info btn_style">MONTHLY</a>
+    <a href="{% url 'annual' %}" type="button" class="btn btn-outline-info btn_style">ANNUAL</a>
+</div>
+
+{% endblock content %}

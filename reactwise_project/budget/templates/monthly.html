@@ -1,0 +1,15 @@
+{% extends 'budget_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="header">MONTHLY</h1>
+<div class="sum_div">
+    <h1>TOTAL</h1>
+    <h1 class="sum">{{sum.sum_of_monthly_expenses}}</h1>
+</div>
+<div class="back_btn">
+    <a href="{% url 'homepage' %}" type="button" class="btn btn-outline-info">BACK TO HOMEPAGE</a>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,32 @@
+{% extends 'budget_base.html' %}
+
+{% block content %}
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<form method="POST">
+    <h1>DAILY</h1>
+    <table>
+        {{daily_form}}
+    </table>
+
+    <h1>MONTHLY</h1>
+    <table>
+        {{monthly_form}}
+    </table>
+
+    <h1>ANNUAL</h1>
+    <table>
+        {{annual_form}}
+    </table>
+    {% csrf_token %}
+    <button type="submit">SUBMIT</button>
+</form>
+
+{% endblock content %}

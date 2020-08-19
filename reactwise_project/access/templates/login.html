@@ -1,0 +1,33 @@
+{% extends 'access_base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Login</h1>
+    <form method="POST">       
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        <label for="id_username">Username:</label>
+                    </th>
+                    <td>
+                        <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" required="" id="id_username">
+                    </td>
+                    </tr>
+                <tr>
+                    <th>
+                        <label for="id_password">Password:</label>
+                    </th>
+                    <td>
+                        <input type="password" name="password" autocomplete="current-password" required="" id="id_password">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        {% csrf_token %}
+        <button type="submit">Login</button>  
+    </form>
+    <p>
+        No account? Signup here: <a href="{% url 'signup' %}">Signup</a>
+    </p>
+{% endblock content %}   
