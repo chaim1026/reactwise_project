@@ -5,6 +5,15 @@
 {% block content %}
 
 <h1 class="header">DAILY</h1>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.WARNING %}
+            <div class="warning-message">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endif %}
 <div class="total_wrapper">
     <div id="total_weekly" class="sum_div">
         <h3>TOTAL WEEKLY</h3>
@@ -43,7 +52,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 1</h4>
                 </div>
                 <div class="flip-card-back">
@@ -60,7 +69,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 2</h4>
                 </div>
                 <div class="flip-card-back">
@@ -74,7 +83,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 3</h4>
                 </div>
                 <div class="flip-card-back">
@@ -88,7 +97,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 4</h4>
                 </div>
                 <div class="flip-card-back">

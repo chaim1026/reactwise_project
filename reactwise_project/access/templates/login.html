@@ -3,7 +3,16 @@
 
 {% block content %}
     <h1>Login</h1>
-    <form method="POST">       
+    <form method="POST"> 
+        {% if form.errors %}
+        <ol>
+            {% for field_name, error in form.errors.items %}
+                <li>
+                    <strong>{{ error|escape }}</strong>
+                </li>
+            {% endfor %}
+        </ol>
+        {% endif %}      
         <table>
             <tbody>
                 <tr>

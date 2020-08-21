@@ -37,7 +37,7 @@
 
 img {
     height: 400px;
-    width: 450px;
+    width: 400px;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -102,7 +102,8 @@ img {
 
 #wrapper {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+
 }
 
 .spent_info {
@@ -112,4 +113,8 @@ img {
 #daily_submit {
     margin-top: 20px;
     margin-left: 100px;
+}
+
+#homepage_form_center {
+    margin-left: 20px;
 }

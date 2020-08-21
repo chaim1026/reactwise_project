@@ -4,6 +4,15 @@
 {% block content %}
     <h1>Signup</h1>
     <form method="POST">
+        {% if signup_form.errors %}
+        <ol>
+            {% for field_name, error in signup_form.errors.items %}
+                <li>
+                    <strong>{{ error|escape }}</strong>
+                </li>
+            {% endfor %}
+        </ol>
+        {% endif %}
         <table>
             <tbody>
                 <tr>

@@ -4,7 +4,23 @@
 {% block content %}
 
 <h1 style="text-align: center; color: aqua; font-size: 60px; margin-top: 50px;">WELCOME {{user.first_name|upper}} TO REACTWISE</h1>
-<img src="{% static 'robot.gif' %}" alt="waving robot">
+
+{% if date == 1 %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                <div class="info-message">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div id="homepage_form_center">
+        <a href="{% url 'forms' %}" type="button" class="btn btn-outline-info">FORMS</a>
+    </div>
+{% endif %}
+
+<img src="{% static 'robot2.gif' %}" alt="waving robot">
 <h1 style="text-align: center;">CLICK ME FOR HELP</h1>
 <div style="text-align: center; margin-top: 100px;">
     <a href="{% url 'daily' %}" type="button" class="btn btn-outline-info btn_style">DAILY</a>

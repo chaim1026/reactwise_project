@@ -5,7 +5,9 @@
 {% if messages %}
 <ul class="messages">
     {% for message in messages %}
-        <li class="{{ message.tags }}">{{ message }}</li>
+        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+            <div class="error-message">{{ message }}</div>
+        {% endif %}
     {% endfor %}
 </ul>
 {% endif %}

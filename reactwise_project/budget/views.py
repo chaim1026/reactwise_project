@@ -39,7 +39,7 @@ def forms(request):
             annual.save()
             return render(request, 'homepage.html')
         else:
-            messages.warning(request, 'Please correct the errors below.')
+            messages.error(request, 'Please correct the errors below.')
             return render(request, 'forms.html', context = {'daily_form': DailyForm(), 'monthly_form': MonthlyForm(), 'annual_form': AnnualForm()})
 
 
@@ -52,24 +52,25 @@ def daily_spending(request):
         if spent_form.is_valid():
             spent = spent_form.save(commit=False) 
             spent.user = request.user
-            spent.save()
-            return redirect('daily')
-    total_sum = MoneySpent.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year ).aggregate(total_sum=Coalesce(Sum('spent'), 0))['total_sum']
+            sundays = get_sundays()
+            total_sum_weekly = MoneySpent.objects.filter(user=request.user, date__gte=sundays[0], date__lt=sundays[1]).aggregate(total_sum_monthly=Coalesce(Sum('spent'), 0))['total_sum_monthly'] + spent.spent
+            if total_sum_weekly > weekly:
+                messages.warning(request, 'With that charge you are exceeding your weekly budget!!!')
+                return redirect('daily')
+            else:
+                spent.save()
+                return redirect('daily')
+    total_sum_monthly = MoneySpent.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year ).aggregate(total_sum_monthly=Coalesce(Sum('spent'), 0))['total_sum_monthly']
     sundays = get_sundays()
-    total_sum_weekly = MoneySpent.objects.filter(user=request.user, date__gte=sundays[0], date__lt=sundays[1]).aggregate(total_sum=Coalesce(Sum('spent'), 0))['total_sum']
-    # total_sum = Coalesce(sum(sum_of_spending.values()), 0)
-    # try:
-    #     total_sum = sum(sum_of_spending.values())
-    # except:
-    #     total_sum = 0
+    total_sum_weekly = MoneySpent.objects.filter(user=request.user, date__gte=sundays[0], date__lt=sundays[1]).aggregate(total_sum_monthly=Coalesce(Sum('spent'), 0))['total_sum_monthly']
     labels = ['Available', 'Spent']
     fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
     fig.add_trace(go.Pie(labels=labels, values=[weekly - total_sum_weekly, total_sum_weekly], name="Weekly Chart"), 1, 1)
-    fig.add_trace(go.Pie(labels=labels, values=[daily_info.weekly - total_sum, total_sum], name="Monthly Chart"), 1, 2)
+    fig.add_trace(go.Pie(labels=labels, values=[daily_info.weekly - total_sum_monthly, total_sum_monthly], name="Monthly Chart"), 1, 2)
     fig.update_traces(hole=.8, hoverinfo="label+percent+name")
-    fig.update_layout(annotations=[dict(text=f'spent: {total_sum}', x=0.20, y=0.5, font_size=20, showarrow=False), dict(text=f'spent: {total_sum}', x=0.80, y=0.5, font_size=20, showarrow=False)])
+    fig.update_layout(annotations=[dict(text=f'spent: {total_sum_monthly}', x=0.20, y=0.5, font_size=20, showarrow=False), dict(text=f'spent: {total_sum_monthly}', x=0.80, y=0.5, font_size=20, showarrow=False)])
     chart = fig.to_html(full_html=False)
-    return render(request, 'daily.html', context = {'daily_info': daily_info, 'weekly': weekly, 'chart': chart, 'spent_form': MoneySpentForm(), 'sum_of_spending': total_sum})
+    return render(request, 'daily.html', context = {'daily_info': daily_info, 'weekly': weekly, 'chart': chart, 'spent_form': MoneySpentForm(), 'sum_of_spending': total_sum_monthly})
 
 
 
@@ -90,4 +91,6 @@ def month_end(request):
 
 
 def homepage(request):
-    return render(request, 'homepage.html')
+    date = datetime.datetime.today().day   
+    messages.info(request, 'Please fill out your new forms')
+    return render(request, 'homepage.html', context = {'date': date})
