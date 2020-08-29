@@ -14,34 +14,43 @@
     {% endfor %}
 </ul>
 {% endif %}
-<div class="total_wrapper">
-    <div id="total_weekly" class="sum_div">
-        <h3>TOTAL WEEKLY</h3>
-        <h3 class="sum">{{weekly}}</h3>
-    </div>
-    <div>
-        <form method="POST">
-            <table>
-                <tbody>
-                    <tr>
-                        <th>
-                            <label class="spent_info" for="id_spent">Spent:</label>
-                        </th>
-                        <td>
-                            <input class="spent_info" type="number" name="spent" value="0" required="" id="id_spent">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            {% csrf_token %}
-            <div id="spent_btn">
-                <button id="daily_submit" type="submit">SUBMIT</button>
+
+<div class="container"></div>
+    <div class="row">
+        <div class="col s12 m4">
+            <div id="total_weekly">
+                <h3 class="center">TOTAL WEEKLY</h3>
+                <h3 class="sum center">{{weekly}}</h3>
             </div>
-        </form>
-    </div>
-    <div id="total_monthly" class="sum_div">
-        <h3>TOTAL MONTHLY</h3>
-        <h3 class="sum">{{daily_info.sum_of_daily}}</h3>
+        </div>
+        <div>
+            <form method="POST">
+                <div class="col s12 m4">
+                    <div class="card-panel grey lighten-3">
+                        <h5 class="center">HOW MUCH WAS SPENT</h5>
+                        <table>
+                            <tbody>
+                                <div>
+                                    <input class="spent_info" type="number" name="spent" placeholder="0" required="" id="id_spent">
+                                </div>
+                            </tbody>
+                        </table>
+                        {% csrf_token %}
+                        <div class="center">
+                            <button class="btn waves-effect waves-light" type="submit" name="action">SUBMIT
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col s12 m4">
+            <div id="total_monthly">
+                <h3 class="center">TOTAL MONTHLY</h3>
+                <h3 class="sum center">{{daily_info.sum_of_daily|add:sum_of_additional_expenses}}</h3>
+            </div>
+        </div>
     </div>
 </div>
 {% autoescape off %}
@@ -52,7 +61,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'blue-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 1</h4>
                 </div>
                 <div class="flip-card-back">
@@ -60,7 +69,12 @@
                     <h6>GAS: {{daily_info.gas}}</h6>
                     <h6>TRANSPORTATION: {{daily_info.transportation}}</h6>
                     <h6>CLEANING HELP: {{daily_info.cleaning_help}}</h6>
-                    <h6>WEEK 1 SUM: {{weekly|add:daily_info.gas|add:daily_info.transportation|add:daily_info.cleaning_help}}</h6>
+                    {% for expense in additional_expenses %}
+                        {% if expense.category == 'daily' %}
+                            <h6>{{expense.name|upper}}: {{expense.amount}}</h6>
+                        {% endif %}
+                    {% endfor %}
+                    <h6>WEEK 1 SUM: {{weekly|add:daily_info.gas|add:daily_info.transportation|add:daily_info.cleaning_help|add:sum_of_additional_expenses}}</h6>
                 </div>
             </div>
         </div>
@@ -69,7 +83,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'blue-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 2</h4>
                 </div>
                 <div class="flip-card-back">
@@ -83,7 +97,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'blue-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 3</h4>
                 </div>
                 <div class="flip-card-back">
@@ -97,7 +111,7 @@
         <div class="flip-card">
             <div class="flip-card-inner">
                 <div class="flip-card-front">
-                    <img style="height: 300px; width: 300px;" src="{% static 'new-green-envelope.jpg' %}" alt="envelope">
+                    <img style="height: 300px; width: 300px;" src="{% static 'blue-envelope.jpg' %}" alt="envelope">
                     <h4 class="envelope_txt">WEEK 4</h4>
                 </div>
                 <div class="flip-card-back">
@@ -108,9 +122,6 @@
             </div>
         </div>
     </div>
-</div>
-<div class="back_btn">
-    <a href="{% url 'homepage' %}" type="button" class="btn btn-outline-info">BACK TO HOMEPAGE</a>
 </div>
 
 {% endblock content %}

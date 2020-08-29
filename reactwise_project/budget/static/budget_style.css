@@ -1,7 +1,7 @@
 .header {
     text-align: center;
     font-size: 110px;
-    color: aqua;
+    color: teal;
 }
 
 .sum {
@@ -13,27 +13,29 @@
     border-radius: 12%;
     margin-top: 50px;
     text-align: center;
+    margin: auto;
+    width: 60%;
 }
 
-#total_weekly {
-    margin-left: 110px;
+/* #total_weekly {
+    margin-left: 130px;
 }
 
 #total_monthly {
-    margin-right: 110px;
-}
+    margin-right: 130px;
+} */
 
-.total_wrapper {
+/* .total_wrapper {
     display: flex;
     justify-content: space-around;
-}
+} */
 
-.back_btn {
+/* .back_btn {
     display: flex;
     justify-content: center;
     margin-bottom: 100px;
     padding: 40px 20px 40px 20px;
-}
+} */
 
 img {
     height: 400px;
@@ -44,13 +46,13 @@ img {
     width: 50%;
 }
 
-.btn_style {
+/* .btn_style {
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 40px;
     padding-bottom: 40px;
     font-size: 40px;
-}
+} */
 
 .flip-card {
     background-color: transparent;
@@ -100,21 +102,37 @@ img {
     font-size: 30px;
 }
 
-#wrapper {
+/* #wrapper {
     display: flex;
     justify-content: space-around;
 
-}
+} */
 
-.spent_info {
+/* .spent_info {
     margin-top: 40px;
-}
+} */
 
-#daily_submit {
+/* #daily_submit {
     margin-top: 20px;
     margin-left: 100px;
-}
+} */
 
 #homepage_form_center {
     margin-left: 20px;
+}
+
+
+.collapsible {
+    width: 400px;
+}
+
+.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ss {
+    border: 1px solid grey;
+    height: 80px;
+    width: 150px;
 }

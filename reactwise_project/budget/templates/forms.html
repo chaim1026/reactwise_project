@@ -1,5 +1,6 @@
 {% extends 'budget_base.html' %}
-
+{% load static %}
+{% load embed_video_tags %}
 {% block content %}
 
 {% if messages %}
@@ -13,22 +14,372 @@
 {% endif %}
 
 <form method="POST">
-    <h1>DAILY</h1>
-    <table>
-        {{daily_form}}
-    </table>
+    <div class="container center">
+        <div class="row">
+            <div class="col s12">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/H53AU6f600A?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/xp3_APyJXFc?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="container center">
+        <div class="row center">
+            <div class="col s12">
+                <div class="card-panel pink darken-9">
+                    <h5>DAILY FORM</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_weekly">Weekly:</label>
+                                    <input type="number" name="weekly" value="0" required="" id="id_weekly">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_extra_days">Extra days:</label>
+                                    <input type="number" name="extra_days" value="0" required="" id="id_extra_days">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_transportation">Transportation:</label>
+                                    <input type="number" name="transportation" value="0" required="" id="id_transportation">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_cleaning_help">Cleaning help:</label>
+                                    <input type="number" name="cleaning_help" value="0" required="" id="id_cleaning_help">
+                                </div>                           
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_gas">Gas:</label>
+                                    <input type="number" name="gas" value="0" required="" id="id_gas">
+                                </div> 
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_date">Date:</label>
+                                    <input type="text" name="date" value="2020-08-24" required="" id="id_date">
+                                    <input type="hidden" name="initial-date" value="2020-08-24" id="initial-id_date">
+                                </div> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container center">
+        <div class="row">
+            <div class="col s12">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/O2qGoFlO8n0?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/74Pv-J6JDlI?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="container center">
+        <div class="row center">
+            <div class="col s12">
+                <div class="card-panel pink darken-9">
+                    <h5>MONTHLY FORM</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_mortgage">Mortgage:</label>
+                                    <input type="number" name="mortgage" value="0" required="" id="id_mortgage">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_vaad_bayit">Vaad bayit:</label>
+                                    <input type="number" name="vaad_bayit" value="0" required="" id="id_vaad_bayit">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_internet_tel">Internet tel:</label>
+                                    <input type="number" name="internet_tel" value="0" required="" id="id_internet_tel">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_cell_phone">Cell phone:</label>
+                                    <input type="number" name="cell_phone" value="0" required="" id="id_cell_phone">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_life_insurance">Life insurance:</label>
+                                    <input type="number" name="life_insurance" value="0" required="" id="id_life_insurance">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_health_insurance">Health insurance:</label>
+                                    <input type="number" name="health_insurance" value="0" required="" id="id_health_insurance">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_home_insurance">Home insurance:</label>
+                                    <input type="number" name="home_insurance" value="0" required="" id="id_home_insurance">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_therapy">Therapy:</label>
+                                    <input type="number" name="therapy" value="0" required="" id="id_therapy">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_tuters">Tuters:</label>
+                                    <input type="number" name="tuters" value="0" required="" id="id_tuters">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_children_savings">Children savings:</label>
+                                    <input type="number" name="children_savings" value="0" required="" id="id_children_savings">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_bank_fees">Bank fees:</label>
+                                    <input type="number" name="bank_fees" value="0" required="" id="id_bank_fees">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_monthly_loan">Monthly loan:</label>
+                                    <input type="number" name="monthly_loan" value="0" required="" id="id_monthly_loan">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_charity">Charity:</label>
+                                    <input type="number" name="charity" value="0" required="" id="id_charity">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_car_insurance_chova">Car insurance chova:</label>
+                                    <input type="number" name="car_insurance_chova" value="0" required="" id="id_car_insurance_chova">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_car_insurance_makif">Car insurance makif:</label>
+                                    <input type="number" name="car_insurance_makif" value="0" required="" id="id_car_insurance_makif">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_extracurricular_activity">Extracurricular activity:</label>
+                                    <input type="number" name="extracurricular_activity" value="0" required="" id="id_extracurricular_activity">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_tuition">Tuition:</label>
+                                    <input type="number" name="tuition" value="0" required="" id="id_tuition">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_kids_transportation">Kids transportation:</label>
+                                    <input type="number" name="kids_transportation" value="0" required="" id="id_kids_transportation">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_date">Date:</label>
+                                    <input type="text" name="date" value="2020-08-24" required="" id="id_date">
+                                    <input type="hidden" name="initial-date" value="2020-08-24" id="initial-id_date">
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h1>MONTHLY</h1>
-    <table>
-        {{monthly_form}}
-    </table>
-
-    <h1>ANNUAL</h1>
-    <table>
-        {{annual_form}}
-    </table>
+    <div class="container center">
+        <div class="row">
+            <div class="col s12">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/R-odLl7AGkM?controls=0" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="container center">
+        <div class="row center">
+            <div class="col s12">
+                <div class="card-panel pink darken-9">
+                    <h5>ANNUAL FORM</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_property_tax">Property tax:</label>
+                                    <input type="number" name="property_tax" value="0" required="" id="id_property_tax">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_water">Water:</label>
+                                    <input type="number" name="water" value="0" required="" id="id_water">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_gas">Gas:</label>
+                                    <input type="number" name="gas" value="0" required="" id="id_gas">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_electric">Electric:</label>
+                                    <input type="number" name="electric" value="0" required="" id="id_electric">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_holidays">Holidays:</label>
+                                    <input type="number" name="holidays" value="0" required="" id="id_holidays">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_dental">Dental:</label>
+                                    <input type="number" name="dental" value="0" required="" id="id_dental">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_eyecare">Eyecare:</label>
+                                    <input type="number" name="eyecare" value="0" required="" id="id_eyecare">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_alternative_medicine">Alternative medicine:</label>
+                                    <input type="number" name="alternative_medicine" value="0" required="" id="id_alternative_medicine">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_kids_gifts">Kids gifts:</label>
+                                    <input type="number" name="kids_gifts" value="0" required="" id="id_kids_gifts">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_couples_gifts">Couples gifts:</label>
+                                    <input type="number" name="couples_gifts" value="0" required="" id="id_couples_gifts">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_general_gifts">General gifts:</label>
+                                    <input type="number" name="general_gifts" value="0" required="" id="id_general_gifts">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_school_supplies">School supplies:</label>
+                                    <input type="number" name="school_supplies" value="0" required="" id="id_school_supplies">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_membership_fees">Membership fees:</label>
+                                    <input type="number" name="membership_fees" value="0" required="" id="id_membership_fees">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_day_trips">Day trips:</label>
+                                    <input type="number" name="day_trips" value="0" required="" id="id_day_trips">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_couples_vacation">Couples vacation:</label>
+                                    <input type="number" name="couples_vacation" value="0" required="" id="id_couples_vacation">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_family_vacation">Family vacation:</label>
+                                    <input type="number" name="family_vacation" value="0" required="" id="id_family_vacation">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_car_registration">Car registration:</label>
+                                    <input type="number" name="car_registration" value="0" required="" id="id_car_registration">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_car_test">Car test:</label>
+                                    <input type="number" name="car_test" value="0" required="" id="id_car_test">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_car_repairs">Car repairs:</label>
+                                    <input type="number" name="car_repairs" value="0" required="" id="id_car_repairs">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_extracurricular_activity">Extracurricular activity:</label>
+                                    <input type="number" name="extracurricular_activity" value="0" required="" id="id_extracurricular_activity">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_water_filter">Water filter:</label>
+                                    <input type="number" name="water_filter" value="0" required="" id="id_water_filter">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_extra_income">Extra income:</label>
+                                    <input type="number" name="extra_income" value="0" required="" id="id_extra_income">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_other_school_fees">Other school fees:</label>
+                                    <input type="number" name="other_school_fees" value="0" required="" id="id_other_school_fees">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label for="id_date">Date:</label>
+                                    <input type="text" name="date" value="2020-08-24" required="" id="id_date">
+                                    <input type="hidden" name="initial-date" value="2020-08-24" id="initial-id_date">
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     {% csrf_token %}
-    <button type="submit">SUBMIT</button>
+    <div class="center">
+        <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
 </form>
 
 {% endblock content %}

@@ -1,0 +1,100 @@
+{% load static %}
+ 
+<div class="row">
+    <div class="col s12 m3">
+        <ul class="collapsible popout center">
+            <li class="active">
+            <div class="collapsible-header"><i class="material-icons teal-text">house</i><span class="teal-text">MORTGAGE</span></div>
+            <div class="collapsible-body"><span class="pink-text">{{monthly.mortgage}}</span></div>
+            </li>
+            <li>
+            <div class="collapsible-header"><i class="fas fa-broom teal-text"></i><span class="teal-text">VAAD BAYIT</span></div>
+            <div class="collapsible-body"><span class="pink-text">{{monthly.vaad_bayit}}</span></div>
+            </li>
+            <li>
+            <div class="collapsible-header"><i class="fab fa-internet-explorer teal-text"></i><span class="teal-text">INTERNET TEL</span></div>
+            <div class="collapsible-body"><span class="pink-text">{{monthly.internet_tel}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="material-icons teal-text">smartphone</i><span class="teal-text"><span class="teal-text">CELL PHONE</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.cell_phone}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-user-alt teal-text"></i><span class="teal-text">LIFE INSURANCE</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.life_insurance}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-user-md teal-text"></i><span class="teal-text">HEALTH INSURANCE</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.health_insurance}}</span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m3">
+        <ul class="collapsible popout center">
+            <li>
+                <div class="collapsible-header"><i class="fas fa-house-damage teal-text"></i><span class="teal-text">HOME INSURANCE</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.home_insurance}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-hands-helping teal-text"></i><span class="teal-text">THERAPY</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.therapy}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-chalkboard-teacher teal-text"></i><span class="teal-text">TUTOR</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.tuters}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-piggy-bank teal-text"></i><span class="teal-text">CHILDRENS SAVINGS</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.children_savings}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-money-check-alt teal-text"></i><span class="teal-text">BANK FEES</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.bank_fees}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-money-bill-wave teal-text"></i><span class="teal-text">MONTHLY LOAN</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.monthly_loan}}</span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m3">
+        <ul class="collapsible popout center">
+            <li>
+                <div class="collapsible-header"><i class="fas fa-donate teal-text"></i><span class="teal-text">CHARITY</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.charity}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-car-crash teal-text"></i><span class="teal-text">CAR INSURANCE CHOVA</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.car_insurance_chova}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-car-crash teal-text"></i><span class="teal-text">CAR INSURANCE MAKIF</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.car_insurance_makif}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-hiking teal-text"></i><span class="teal-text">EXTRACURRICULAR ACTIVITY</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.extracurricular_activity}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-school teal-text"></i><span class="teal-text">TUITION</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.tuition}}</span></div>
+            </li>
+            <li>
+                <div class="collapsible-header"><i class="fas fa-bus-alt tuition teal-text"></i><span class="teal-text">KIDS TRANPORTATION</span></div>
+                <div class="collapsible-body"><span class="pink-text">{{monthly.kids_transportation}}</span></div>
+            </li>
+        </ul>
+    </div>
+    <div class="col s12 m3">
+        <ul class="collapsible popout center">
+            {% for am in additional_monthly %}
+                {% if am.category == 'monthly' %}
+                    <li>
+                        <div class="collapsible-header"><span class="teal-text">{{am.name|upper}}</span></div>
+                        <div class="collapsible-body"><span class="pink-text">{{am.amount}}</span></div>
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>

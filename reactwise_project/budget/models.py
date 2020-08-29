@@ -79,6 +79,14 @@ class Annual(models.Model):
         return self.total_annual_expenses
 
 
+class Additional_expenses(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.IntegerField(default=0)
+    category = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete = models.PROTECT)
+    date = models.DateField(default=date.today)
+
+
 class MoneySpent(models.Model):
     spent = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)

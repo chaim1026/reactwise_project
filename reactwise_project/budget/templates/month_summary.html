@@ -1,0 +1,14 @@
+{% extends 'budget_base.html' %}
+{% load static %}
+
+
+{% block content %}
+    <h3 class="teal-text">DAILY TOTAL: {{daily.sum_of_daily|add:sum_of_additional_daily}}</h3>
+    <h3 class="teal-text">MONTHLY TOTAL: {{monthly.sum_of_monthly_expenses|add:sum_of_additional_monthly}}</h3>
+    <h3 class="teal-text">ANNUAL TOTAL: {{annual.sum_of_annual_expenses|add:sum_of_additional_annual}}</h3>
+    <h3 class="pink-text">TOTAL EXPENSES:{{daily.sum_of_daily|add:sum_of_additional_daily|add:monthly.sum_of_monthly_expenses|add:sum_of_additional_monthly|add:annual.sum_of_annual_expenses|add:sum_of_additional_annual}}</h3>
+    <h3 class="grey-text">TOTAL INCOME: </h3>
+    <h3 class="red-text">SURPLUS/DEFICIT:</h3>
+    <h3 class="light-green-text">WEALTH BASKET:</h3>
+    <h3 class="purple-text">CUSHION:</h3>
+{% endblock content %}

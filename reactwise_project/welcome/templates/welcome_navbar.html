@@ -1,13 +1,32 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">REACTWISE</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-      </ul>
-        <a class="nav-link" href="{% url 'signup' %}">SIGNUP</a>
-        <a class="nav-link" href="{% url 'login' %}">LOGIN</a>
-    </div>
+{% load static %}
+
+<!-- Navbar -->
+<div class="navbar-fixed">
+  <nav class="teal">
+    <div>
+      <div class="nav-wrapper">
+          <a href="#" class="brand-logo center"><img style="height: 64px; width: 220px;" src="{% static 'logo2.png' %}" alt="logo"></a>
+          <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+          <ul class="left hide-on-med-and-down">
+              <li><a href="{% url 'welcome' %}">WELCOME</a></li>
+              <li><a href="{% url 'how_it_works' %}">HOW IT WORKS</a></li>
+              <li><a href="{% url 'reactcard' %}">REACTCARD</a></li>
+              <li><a href="#GALLERY">GALLERY</a></li>
+              <li><a href="#CONTACT">CONTACT</a></li>
+          </ul>
+          <ul class="right hide-on-med-and-down">
+              <li><a class="waves-effect waves-light btn-large pink" href="{% url 'signup' %}">SIGNUP</a></li>
+              <li><a class="waves-effect waves-light btn-large pink" href="{% url 'login' %}">LOGIN</a></li>
+          </ul>
+      </div>
+    </div>  
   </nav>
+</div>
+<ul class="sidenav" id="mobile-nav">
+  <li><a href="WELCOME">WELCOME</a></li>
+  <li><a href="ABOUT">ABOUT</a></li>
+  <li><a href="REACTCARD">REACTCARD</a></li>
+  <li><a href="CONTACT">CONTACT</a></li>
+  <li><a class="waves-effect waves-light btn-large pink" href="{% url 'signup' %}">SIGNUP</a></li>
+  <li><a class="waves-effect waves-light btn-large pink" href="{% url 'login' %}">LOGIN</a></li>
+</ul>

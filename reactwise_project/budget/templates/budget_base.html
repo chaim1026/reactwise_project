@@ -5,14 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reactwise</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="{% static 'budget_style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     {% include 'budget_navbar.html' %}
     
     {% block content %}
     {% endblock content %}
-    
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large teal-darken-7" href="#">
+          <i class="large material-icons">arrow_upward</i>
+        </a>
+    </div>
+    <script src="https://kit.fontawesome.com/08ab31cae7.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        // sidenav
+        const sideNav = document.querySelector('.sidenav');
+        M.Sidenav.init(sideNav, {});
+
+        // collapse
+        const collapse = document.querySelectorAll('.collapsible');
+        M.Collapsible.init(collapse, {});
+
+        // dropdown
+        const dropDown = document.querySelector('.dropdown-trigger');
+        M.Dropdown.init(dropDown, {})
+    </script>
 </body>
 </html>
