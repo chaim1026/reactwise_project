@@ -1,0 +1,70 @@
+{% extends 'budget_base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <form method="post">
+        <div class="container center">
+            <div class="row center">
+                <div class="col s12">
+                    <div class="card-panel teal">
+                        <h3 class='pink-text'>INCOME</h3>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th>
+                                        <label class="pink-text" for="id_name"><h5>Name:</h5></label>
+                                    </th>
+                                    <td>
+                                        <input type="text" name="name" maxlength="100" required="" id="id_name">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <label class="pink-text" for="id_amount"><h5>Amount:</h5></label>
+                                    </th>
+                                    <td>
+                                        <input type="number" name="amount" placeholder="0" required="" id="id_amount">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% csrf_token %}
+        <div class="center">
+            <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+    </form>
+    
+    <div class="container center" style="margin-top: 30px;">
+        <div class="row center">
+            <div class="col s12 offset-s1">
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th>INCOME TYPE</th>
+                            <th>AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for budget in user_budget %}
+                            <tr>
+                                <td>{{budget.name|upper}}</td>
+                                <td>{{budget.amount}}</td>
+                            </tr>                
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="center teal-text" style="font-size: 50px;">
+        BUDGET SUM: {{budget_sum}}
+    </div>
+{% endblock content %}

@@ -92,3 +92,10 @@ class MoneySpent(models.Model):
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=date.today)
     # auto_add_now=True fix at home
+
+
+class Budget(models.Model):
+    name = models.CharField(max_length=100)
+    amount = models.IntegerField(default=0)
+    user = models.ForeignKey(User, on_delete = models.PROTECT)
+    date = models.DateField(default=date.today)

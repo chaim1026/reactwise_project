@@ -15,13 +15,26 @@
         {% endfor %}
     </ul>
     {% endif %}
-    <div id="homepage_form_center">
-    <a class="waves-effect waves-light btn-large" href="{% url 'forms' %}">FORMS</a>
 
+    <div id="homepage_form_center">
+        <a class="waves-effect waves-light btn-large" href="{% url 'forms' %}">FORMS</a>
     </div>
 {% endif %}
 
-<img src="{% static 'robot2.gif' %}" alt="waving robot">
+<a href="#" onclick="toggleModal();"><img src="{% static 'robot2.gif' %}" alt="waving robot"></a>
 <h1 style="text-align: center;">CLICK ME FOR HELP</h1>
+
+
+<section class="infomodal">
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <img style="width: 170px; height: 170px;" src="{% static 'robot2.gif' %}" alt="waving robot">
+            <h4 id="info-modal-heading" class="center teal-text">How can I help?</h4>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect btn-flat">Goodbye</a>
+        </div>
+    </div>
+</section>
 
 {% endblock content %}

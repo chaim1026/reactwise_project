@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent
+from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget
 from django.contrib.auth.models import User
-from .forms import DailyForm, MonthlyForm, AnnualForm, Additional_expensesForm, MoneySpentForm
+from .forms import DailyForm, MonthlyForm, AnnualForm, Additional_expensesForm, MoneySpentForm, BudgetForm
 from django.contrib import messages
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from django.db.models import Avg, Max, Min, Sum
 from django.db.models.functions import Coalesce
 import datetime
-from chatterbot import ChatBot
-from chatterbot.trainers import ListTrainer
+
 
 def get_sundays():
     today = datetime.date.today()
@@ -135,6 +134,10 @@ def month_summary(request):
     monthly = Monthly.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     annual = Annual.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    budget_sum = 0
+    for budget in user_budget:
+        budget_sum += budget.amount
     sum_of_additional_daily = 0
     sum_of_additional_monthly = 0
     sum_of_additional_annual = 0
@@ -145,12 +148,33 @@ def month_summary(request):
             sum_of_additional_monthly += expense.amount
         else:
             sum_of_additional_annual += expense.amount
-    return render(request, 'month_summary.html', context = {'daily': daily, 'monthly': monthly, 'annual': annual, 'sum_of_additional_daily': sum_of_additional_daily, 'sum_of_additional_monthly': sum_of_additional_monthly, 'sum_of_additional_annual': sum_of_additional_annual})
+    total_expenses = sum_of_additional_daily + sum_of_additional_monthly + sum_of_additional_annual + daily.sum_of_daily() + monthly.sum_of_monthly_expenses() + annual.sum_of_annual_expenses()
+    outcome = budget_sum - total_expenses
+    return render(request, 'month_summary.html', context = {'daily': daily, 'monthly': monthly, 'annual': annual, 'sum_of_additional_daily': sum_of_additional_daily, 'sum_of_additional_monthly': sum_of_additional_monthly, 'sum_of_additional_annual': sum_of_additional_annual, 'budget_sum': budget_sum, 'total_expenses': total_expenses, 'outcome': outcome})
 
 
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
-
-
     return render(request, 'homepage.html', context = {'date': date})
+
+
+def budget(request):
+    user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    budget_sum = 0
+    for budget in user_budget:
+        budget_sum += budget.amount
+
+    if request.method == 'GET':
+        return render(request, 'budget.html', context = {'budget_form': BudgetForm(), 'user_budget': user_budget, 'budget_sum': budget_sum})
+
+    if request.method == 'POST':
+        budget_form = BudgetForm(request.POST)
+        if budget_form.is_valid():
+            the_budget = budget_form.save(commit=False)
+            the_budget.user = request.user
+            the_budget.save()
+            return redirect('budget')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+            return render(request, 'budget.html', context = {'budget_form': BudgetForm(), 'user_budget': user_budget, 'budget_sum': budget_sum})

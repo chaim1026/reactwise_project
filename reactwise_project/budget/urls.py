@@ -11,4 +11,5 @@ urlpatterns = [
     path('Annual-Spending/', views.annual_spending, name = 'annual'),
     path('Annual-Spreadsheet/', views.annual_spreadsheet, name = 'annual_spreadsheet'),
     path('Month-Summary/', views.month_summary, name = 'month_summary'),
+    path('Budget/', views.budget, name = 'budget'),
 ]
