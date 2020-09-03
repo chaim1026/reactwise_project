@@ -156,6 +156,9 @@ def month_summary(request):
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
+    # greeting_list = ['hi', 'hello', 'whats up', 'sup', 'how are you']
+    # if request.method == 'GET':
+    #     return render(request, 'homepage.html')
     return render(request, 'homepage.html', context = {'date': date})
 
 

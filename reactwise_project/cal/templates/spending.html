@@ -1,0 +1,12 @@
+{% extends 'cal_base.html' %}
+{% load static %}
+
+{% block content %}
+    <form method="POST">
+        <table>
+            {{event_form}}
+        </table>
+        {% csrf_token %}
+        <button type="submit" name="action">SUBMIT</button>
+    </form>
+{% endblock %}

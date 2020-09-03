@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 from datetime import date
 
 
@@ -10,7 +11,7 @@ class Daily(models.Model):
     cleaning_help = models.IntegerField(default = 0)
     gas = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
     
 
     def sum_of_daily(self):
@@ -38,7 +39,7 @@ class Monthly(models.Model):
     tuition = models.IntegerField(default = 0)
     kids_transportation = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
 
 
     def sum_of_monthly_expenses(self):
@@ -71,7 +72,7 @@ class Annual(models.Model):
     extra_income = models.IntegerField(default = 0)
     other_school_fees = models.IntegerField(default = 0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
 
 
     def sum_of_annual_expenses(self):
@@ -84,13 +85,15 @@ class Additional_expenses(models.Model):
     amount = models.IntegerField(default=0)
     category = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
+
 
 
 class MoneySpent(models.Model):
+    name = models.CharField(default='expense', max_length=100)
     spent = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
     # auto_add_now=True fix at home
 
 
@@ -98,4 +101,5 @@ class Budget(models.Model):
     name = models.CharField(max_length=100)
     amount = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
-    date = models.DateField(default=date.today)
+    date = models.DateField(default=timezone.now)
+    

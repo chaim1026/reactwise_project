@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'access',
     'welcome',
     'embed_video',
+    'cal',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'reactwise',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD': ,
         'HOST': '127.0.0.1',
         'PORT': '5432', 
     }

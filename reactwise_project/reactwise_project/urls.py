@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('welcome.urls')),
     path('access/', include('access.urls')),
     path('budget/', include('budget.urls')),
+    path('cal/', include('cal.urls')),
 ]

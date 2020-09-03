@@ -5,6 +5,15 @@
         <li><a href="{% url 'monthly_spreadsheet' %}">Monthly Spreadsheet</a></li>
         <li><a href="{% url 'annual_spreadsheet' %}">Annual Spreadsheet</a></li>
     </ul>
+    <ul id="dropdown2" class="dropdown-content">
+        <li><a href="{% url 'calendar' %}">CALENDAR</a></li>
+        <li><a href="{% url 'spending' %}">SPENDING</a></li>
+    </ul>
+    <ul id="dropdown3" class="dropdown-content">
+        <li><a href="{% url 'daily' %}">DAILY</a></li>
+        <li><a href="{% url 'monthly' %}">MONTHLY</a></li>
+        <li><a href="{% url 'annual' %}">ANNUAL</a></li>
+    </ul>
     <nav class="pink">
         <div class="nav-wrapper">
         <a href="#!" class="brand-logo center"><img style="height: 64px; width: 220px;" src="{% static 'logo2.png' %}" alt="logo"></a>
@@ -15,11 +24,10 @@
         <ul class="left hide-on-med-and-down">
             <li><a href="{% url 'homepage' %}">HOMEPAGE</a></li>
             <li><a href="{% url 'budget' %}">BUDGET</a></li>
-            <li><a href="{% url 'daily' %}">DAILY</a></li>
-            <li><a href="{% url 'monthly' %}">MONTHLY</a></li>
-            <li><a href="{% url 'annual' %}">ANNUAL</a></li>
-            <li><a href="{% url 'month_summary' %}">MONTH SUMMARY</a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown3">CATEGORYS<i class="material-icons right">arrow_drop_down</i></a></li>
             <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">SPEADSHEETS<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">CALENDAR<i class="material-icons right">arrow_drop_down</i></a></li>
+            <li><a href="{% url 'month_summary' %}">MONTH SUMMARY</a></li>
         </ul>
         </div>
     </nav>
@@ -30,6 +38,8 @@
     <li><a href="{% url 'daily' %}">DAILY</a></li>
     <li><a href="{% url 'monthly' %}">MONTHLY</a></li>
     <li><a href="{% url 'annual' %}">ANNUAL</a></li>
+    <li><a href="{% url 'spending' %}">SPENDING</a></li>
+    <li><a href="{% url 'calendar' %}">CALENDAR</a></li>
     <li><a href="{% url 'month_summary' %}">MONTH SUMMARY</a></li>
     <li><a class="waves-effect waves-light btn-large" href="{% url 'logout' %}">LOGOUT</a></li>
 </ul>
