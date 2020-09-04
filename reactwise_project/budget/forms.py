@@ -1,5 +1,5 @@
 from django import forms
-from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget
+from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget, Bot
 from django.contrib.auth.models import User
 
 
@@ -45,5 +45,12 @@ class MoneySpentForm(forms.ModelForm):
 class BudgetForm(forms.ModelForm):
     class Meta:
         model = Budget
+        fields = '__all__'
+        exclude = ['user', 'date']
+
+
+class BotForm(forms.ModelForm):
+    class Meta:
+        model = Bot
         fields = '__all__'
         exclude = ['user', 'date']

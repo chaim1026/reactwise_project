@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reactwise</title>
-    <link rel="stylesheet" href="{% static 'budget_style.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'budget_style.css' %}">
 </head>
 <body>
     {% include 'budget_navbar.html' %}
@@ -44,7 +44,6 @@
             var instance = M.Modal.getInstance($('#modal1'))
             instance.open()
         }
-
     </script>
 </body>
 </html>

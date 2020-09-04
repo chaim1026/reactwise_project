@@ -1,12 +1,10 @@
-from datetime import datetime
+from datetime import datetime, date
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views import generic
 from django.utils.safestring import mark_safe
 from django.contrib.auth.models import User
-from .models import *
 from budget.models import MoneySpent
-from .forms import CalSpendingForm
 from budget.forms import MoneySpentForm
 from .utils import Calendar
 import calendar
@@ -57,17 +55,3 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return date(year, month, day=1)
     return datetime.today()
-
-def spending(request):
-    if request.method == "GET":
-        return render(request, 'spending.html', context = {'event_form': CalSpendingForm()})
-    
-    if request.method == 'POST':
-        event_form = CalSpendingForm(request.POST)
-        if event_form.is_valid():
-            event = event_form.save(commit=False)
-            event.user = request.user
-            event.save()
-            return redirect('spending')
-        else:
-            pass

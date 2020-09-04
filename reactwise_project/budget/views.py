@@ -1,13 +1,16 @@
 from django.shortcuts import render, redirect
-from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget
+from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget, Bot
 from django.contrib.auth.models import User
-from .forms import DailyForm, MonthlyForm, AnnualForm, Additional_expensesForm, MoneySpentForm, BudgetForm
+from .forms import DailyForm, MonthlyForm, AnnualForm, Additional_expensesForm, MoneySpentForm, BudgetForm, BotForm
 from django.contrib import messages
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from django.db.models import Avg, Max, Min, Sum
 from django.db.models.functions import Coalesce
 import datetime
+from chatterbot import ChatBot 
+from chatterbot.trainers import ListTrainer
+from chatterbot.trainers import ChatterBotCorpusTrainer
 
 
 def get_sundays():
@@ -156,10 +159,50 @@ def month_summary(request):
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
-    # greeting_list = ['hi', 'hello', 'whats up', 'sup', 'how are you']
-    # if request.method == 'GET':
-    #     return render(request, 'homepage.html')
-    return render(request, 'homepage.html', context = {'date': date})
+    
+    # my_bot = ChatBot(name='PyBot', read_only=True, logic_adapters=['chatterbot.logic.MathematicalEvaluation', 'chatterbot.logic.BestMatch'])
+
+    # small_talk = ['hi there',
+    #     'how do you do?',
+    #     'how are you?',
+    #     'i\'m cool.',
+    #     'fine, you?',
+    #     'always cool',
+    #     'i\'m ok',
+    #     'glad to hear that',
+    #     'i feel awesome',
+    #     'excellent, glad to hear that',
+    #     'not so good',
+    #     'sorry to hear that.',
+    #     'what\'s your name?',
+    #     'i\'m pybot. ask me a math question, please.']
+
+    # math_talk_1 = ['pythagorean theorem', 'a squared plus b squared equals c squared.']
+
+    # math_talk_2 = ['law of cosines', 'c**2 = a**2 + b**2 - 2 * a * b * cos(gamma)']
+
+    # list_trainer = ListTrainer(my_bot)
+
+    # corpus_trainer = ChatterBotCorpusTrainer(my_bot)
+    # corpus_trainer.train('chatterbot.corpus.english')
+
+    # for item in (small_talk, math_talk_1, math_talk_2):
+    #     list_trainer.train(item)
+
+    # if request.method == "GET":
+    #     return render(request, 'homepage.html', context={'date': date, 'bot': my_bot, 'bot_form': BotForm(), 'showdiv': False})
+
+    # if request.method == "POST":
+    #     robot_form = BotForm(request.POST)
+    #     if robot_form.is_valid():
+    #         r_form = robot_form.save(commit=False)
+    #         text = r_form.text
+    #         text = my_bot.get_response(text)
+    #         # r_form.save()
+    #         # return redirect('robot')
+    #         return render(request, 'robot.html', context={'bot': my_bot, 'bot_form': BotForm(), 'text': text, 'showdiv': True })
+
+    return render(request, 'homepage.html', context = {'date': date, 'bot_form': BotForm()})
 
 
 def budget(request):

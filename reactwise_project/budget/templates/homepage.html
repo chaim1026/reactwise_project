@@ -30,11 +30,24 @@
         <div class="modal-content">
             <img style="width: 170px; height: 170px;" src="{% static 'robot2.gif' %}" alt="waving robot">
             <h4 id="info-modal-heading" class="center teal-text">How can I help?</h4>
+            <form method="post">
+                <!-- {{bot_form}}
+                {% csrf_token %}
+                <div class="center">
+                    <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+            </form>
+            {% if showdiv %}
+                <div id="showRank">
+                    {{text}}
+                </div>
+            {% endif %} -->
         </div>
         <div class="modal-footer">
             <a href="#" class="modal-close waves-effect btn-flat">Goodbye</a>
         </div>
     </div>
 </section>
-
 {% endblock content %}

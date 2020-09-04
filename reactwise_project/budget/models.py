@@ -103,3 +103,9 @@ class Budget(models.Model):
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=timezone.now)
     
+
+class Bot(models.Model):
+    text = models.CharField(max_length=150)
+    user = models.ForeignKey(User, on_delete = models.PROTECT)
+    date = models.DateField(default=timezone.now)
+

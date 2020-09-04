@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
-from .models import CalSpending
 from budget.models import MoneySpent
 
 
