@@ -50,7 +50,7 @@
         <div class="col s12 m4">
             <div id="total_monthly">
                 <h3 class="center">TOTAL MONTHLY</h3>
-                <h3 class="sum center">{{daily_info.sum_of_daily|add:sum_of_additional_expenses}}</h3>
+                <h3 class="sum center">{{full_weekly}}</h3>
             </div>
         </div>
     </div>
@@ -68,24 +68,13 @@
                     <h6>WEEKLY: {{weekly}}</h6>
                 </div>
                 <div class="writing">
-                    <h6>GAS: {{daily_info.gas}}</h6>
-                </div>
-                <div class="writing">
-                    <h6>TRANSPORTATION: {{daily_info.transportation}}</h6>
-                </div>
-                <div class="writing">
-                    <h6>CLEANING HELP: {{daily_info.cleaning_help}}</h6>
-                </div>
-                <div class="writing">
-                    {% for expense in additional_expenses %}
-                        {% if expense.category == 'daily' %}
+                    {% for expense in daily_info %}
+                        {% if expense.name != 'weekly' and expense.name != 'extra days' %}
                             <h6>{{expense.name|upper}}: {{expense.amount}}</h6>
                         {% endif %}
                     {% endfor %}
                 </div>
-                <div class="writing">
-                    <h6>WEEK 1 SUM: {{weekly|add:daily_info.gas|add:daily_info.transportation|add:daily_info.cleaning_help|add:sum_of_additional_expenses}}</h6>
-                </div>
+                
             </div>
         </div>
     </div>
@@ -111,9 +100,14 @@
         <div class="cover">
             <div class="letter">
                 <div class="writing">
-                    <h6>WEEKLY: {{weekly}}</h6>
-                    <h6>EXTRA DAYS: {{daily_info.extra_days}}</h6>
-                    <h6>WEEK 4 SUM: {{weekly|add:daily_info.extra_days}}</h6>
+                    <h6>WEEKLY: {{weekly}}</h6>   
+                </div>
+                <div class="writing">
+                    {% for expense in daily_info %}
+                        {% if expense.name == 'extra days' %}
+                            <h6>{{expense.name|upper}}: {{expense.amount}}</h6>
+                        {% endif %}
+                    {% endfor %}
                 </div>
             </div>
         </div>

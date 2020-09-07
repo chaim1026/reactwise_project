@@ -32,7 +32,17 @@ img {
 .ss {
     border: 1px solid grey;
     height: 80px;
-    width: 150px;
+    width: 160px;
+}
+
+.ssi {
+    border: 1px solid grey;
+    height: 120px;
+    width: 160px;
+}
+
+.m_size {
+    font-size: 30px;
 }
 
 .mail {

@@ -1,0 +1,80 @@
+{% extends 'budget_base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- Modal Trigger -->
+<div class="center">
+<a class="waves-effect waves-light btn-large modal-trigger pink" href="#modal1">FORM INPUT</a>
+</div>
+
+<!-- Modal Structure -->
+<div id="modal1" class="modal modal-fixed-footer">
+<div class="modal-content">
+    <h4>Modal Header</h4>
+    <p>A bunch of text</p>
+</div>
+<div class="modal-footer">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+</div>
+</div>
+
+<form method="POST">
+    <div class="container center">
+        <div class="row center">
+            <div class="col s12">
+                <div class="card-panel teal">
+                    <h5 class='teal-text'>EXPENSES</h5>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <div class="input-field">
+                                    <label class="pink-text" for="id_name">Name of expense:</label>
+                                    <input type="text" name="name" maxlength="100" required="" id="id_name">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <label class="pink-text" for="id_amount">Amount:</label>
+                                    <input type="number" name="amount" value="0" required="" id="id_amount">
+                                </div>
+                            </tr>
+                            <tr>
+                                <div class="input-field">
+                                    <div>
+                                        <label class="pink-text" for="id_category">Category:</label>
+                                    </div>
+                                    <div>
+                                        <label>
+                                            <input class="with-gap" name="category" type="radio" value="daily"/>
+                                            <span class="pink-text">DAILY</span>
+                                        </label>
+                                        <label>
+                                            <input class="with-gap" name="category" type="radio" value="monthly"/>
+                                            <span class="pink-text">MONTHLY</span>
+                                        </label>
+                                        <label>
+                                            <input class="with-gap" name="category" type="radio" value="annual"/>
+                                            <span class="pink-text">ANNUAL</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>        
+        </div>
+    </div>
+    {% csrf_token %}
+    <div class="center">
+        <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+     </div>
+</form>
+<div class="back_btn center" style="margin-top: 50px;">
+    <a class="waves-effect waves-light btn-large" href="{% url 'homepage' %}">WHEN YOUR FINISHED CLICK HERE</a>
+</div>
+
+{% endblock content %}

@@ -1,38 +1,15 @@
 from django import forms
-from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget, Bot
+from .models import Expenses, MoneySpent, Budget, Bot
 from django.contrib.auth.models import User
 
 
-class DailyForm(forms.ModelForm):
+class ExpensesForm(forms.ModelForm):
 
     class Meta:      
-        model = Daily
+        model = Expenses
         fields = '__all__'
-        exclude = ['user']
+        exclude = ['user', 'date']
 
-class MonthlyForm(forms.ModelForm):
-
-    class Meta:      
-        model = Monthly
-        fields = '__all__'
-        exclude = ['user']
-
-
-
-class AnnualForm(forms.ModelForm):
-
-    class Meta:      
-        model = Annual
-        fields = '__all__'
-        exclude = ['user']
-
-
-class Additional_expensesForm(forms.ModelForm):
-
-    class Meta:      
-        model = Additional_expenses
-        fields = '__all__'
-        exclude = ['user']
 
 class MoneySpentForm(forms.ModelForm):
 

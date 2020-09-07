@@ -3,9 +3,9 @@
 
 
 {% block content %}
-    <h3 class="teal-text">DAILY TOTAL: {{daily.sum_of_daily|add:sum_of_additional_daily}}</h3>
-    <h3 class="teal-text">MONTHLY TOTAL: {{monthly.sum_of_monthly_expenses|add:sum_of_additional_monthly}}</h3>
-    <h3 class="teal-text">ANNUAL TOTAL: {{annual.sum_of_annual_expenses|add:sum_of_additional_annual}}</h3>
+    <h3 class="teal-text">DAILY TOTAL: {{sum_daily}}</h3>
+    <h3 class="teal-text">MONTHLY TOTAL: {{sum_monthly}}</h3>
+    <h3 class="teal-text">ANNUAL TOTAL: {{sum_annual}}</h3>
     <h3 class="pink-text">TOTAL EXPENSES: {{total_expenses}}</h3>
     <h3 class="grey-text">TOTAL INCOME: {{budget_sum}}</h3>
     <h3 class="red-text">SURPLUS/DEFICIT: {{outcome}}</h3>

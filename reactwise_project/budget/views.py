@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Daily, Monthly, Annual, Additional_expenses, MoneySpent, Budget, Bot
+from .models import Expenses, MoneySpent, Budget, Bot
 from django.contrib.auth.models import User
-from .forms import DailyForm, MonthlyForm, AnnualForm, Additional_expensesForm, MoneySpentForm, BudgetForm, BotForm
+from .forms import ExpensesForm, MoneySpentForm, BudgetForm, BotForm
 from django.contrib import messages
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -25,55 +25,33 @@ def get_sundays():
     
 
 
-def forms(request):
-    if request.method == "GET":
-        return render(request, 'forms.html', context = {'daily_form': DailyForm(), 'monthly_form': MonthlyForm(), 'annual_form': AnnualForm()})
-
-    if request.method == "POST":
-        daily_form = DailyForm(request.POST)
-        monthly_form = MonthlyForm(request.POST)
-        annual_form = AnnualForm(request.POST)
-        if daily_form.is_valid() and monthly_form.is_valid() and annual_form.is_valid():
-            daily = daily_form.save(commit=False) 
-            monthly = monthly_form.save(commit=False) 
-            annual = annual_form.save(commit=False)
-            daily.user = request.user
-            monthly.user = request.user
-            annual.user = request.user
-            daily.save() 
-            monthly.save() 
-            annual.save()
-            return redirect('additional_expenses_form')
-        else:
-            messages.error(request, 'Please correct the errors below.')
-            return render(request, 'forms.html', context = {'daily_form': DailyForm(), 'monthly_form': MonthlyForm(), 'annual_form': AnnualForm()})
-
-
-def additional_expenses_form(request):
+def expenses_forms(request):
     if request.method == 'GET':
-        return render(request, 'additional_expenses_form.html', context = {'additional_form': Additional_expensesForm()})
-
+        return render(request, 'expenses_form.html', context={'expenses_form': ExpensesForm()})
+    
     if request.method == 'POST':
-        additional_form = Additional_expensesForm(request.POST)
-        if additional_form.is_valid():
-            additional = additional_form.save(commit=False)
-            additional.user = request.user
-            additional.save()
-            return redirect('additional_expenses_form')
+        expenses_form = ExpensesForm(request.POST)
+        if expenses_form.is_valid():
+            expenses = expenses_form.save(commit=False)
+            expenses.user = request.user
+            expenses.save()
+            return redirect('expenses_form')
         else:
             messages.error(request, 'Please correct the errors below.')
-            return render(request, 'additional_expenses_form.html', context = {'additional_form': Additional_expensesForm()})
-            
+            return render(request, 'expenses_form.html', context={'expenses_form': ExpensesForm()})
+
 
 
 def daily_spending(request):
-    daily_info = Daily.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    sum_of_additional_expenses = 0
-    for expense in additional_expenses:
-        if expense.category == 'daily':
-            sum_of_additional_expenses += expense.amount
-    weekly = daily_info.weekly/4 + sum_of_additional_expenses/4
+    daily_info = Expenses.objects.filter(user= request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    sum_daily = 0
+    weekly = 0
+    for expense in daily_info:
+        sum_daily += expense.amount
+        if expense.name == 'weekly':
+            weekly += expense.amount
+    full_weekly = weekly
+    weekly = weekly/4
     if request.method == "POST":
         spent_form = MoneySpentForm(request.POST)
         if spent_form.is_valid():
@@ -93,76 +71,71 @@ def daily_spending(request):
     labels = ['Available', 'Spent']
     fig = make_subplots(rows=1, cols=2, specs=[[{'type':'domain'}, {'type':'domain'}]])
     fig.add_trace(go.Pie(labels=labels, values=[weekly - total_sum_weekly, total_sum_weekly], name="Weekly Chart"), 1, 1)
-    fig.add_trace(go.Pie(labels=labels, values=[(daily_info.weekly + sum_of_additional_expenses) - total_sum_monthly, total_sum_monthly], name="Monthly Chart"), 1, 2)
+    fig.add_trace(go.Pie(labels=labels, values=[full_weekly - total_sum_monthly, total_sum_monthly], name="Monthly Chart"), 1, 2)
     fig.update_traces(hole=.8, hoverinfo="label+percent+name")
     fig.update_layout(annotations=[dict(text=f'spent: {total_sum_weekly}', x=0.20, y=0.5, font_size=20, showarrow=False), dict(text=f'spent: {total_sum_monthly}', x=0.80, y=0.5, font_size=20, showarrow=False)])
     chart = fig.to_html(full_html=False)
-    return render(request, 'daily.html', context = {'daily_info': daily_info, 'weekly': weekly, 'chart': chart, 'spent_form': MoneySpentForm(), 'sum_of_spending': total_sum_monthly, 'sum_of_additional_expenses': sum_of_additional_expenses, 'additional_expenses': additional_expenses})
+    return render(request, 'daily.html', context = {'daily_info': daily_info, 'weekly': weekly, 'full_weekly':full_weekly, 'chart': chart, 'spent_form': MoneySpentForm(), 'sum_of_spending': total_sum_monthly, 'sum_daily': sum_daily})
 
 
 
 def monthly_spending(request):
-    monthly = Monthly.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    additional_monthly = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    sum_of_additional_expenses = 0
-    for expense in additional_monthly:
-        if expense.category == 'monthly':
-            sum_of_additional_expenses += expense.amount
-    return render(request, 'monthly.html', context = {'monthly': monthly, 'additional_monthly': additional_monthly, 'sum_of_additional_expenses': sum_of_additional_expenses})
+    monthly = Expenses.objects.filter(user= request.user, category='monthly', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    sum_monthly = 0
+    for expense in monthly:
+        sum_monthly += expense.amount
+    return render(request, 'monthly.html', context = {'monthly': monthly, 'sum_monthly': sum_monthly})
 
 
 def monthly_spreadsheet(request):
-    monthly = Monthly.objects.filter(user=request.user, date__year=datetime.date.today().year)
-    additional_monthly = Additional_expenses.objects.filter(user= request.user, date__year=datetime.date.today().year)
-    return render(request, 'monthly_spreadsheet.html', context = {'mss': monthly, 'additional_monthly': additional_monthly})
+    monthly = Expenses.objects.filter(user=request.user, category='monthly', date__year=datetime.date.today().year)
+    month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    let_month_list = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return render(request, 'monthly_spreadsheet.html', context = {'mss': monthly, 'month_list': month_list, 'let_month_list': let_month_list, 'zip': zip(range(1,13),let_month_list)})
 
 
 def annual_spending(request):
-    annual = Annual.objects.get(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    additional_annual = Additional_expenses.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    sum_of_additional_expenses = 0
-    for expense in additional_annual:
-        if expense.category == 'annual':
-            sum_of_additional_expenses += expense.amount
-    return render(request, 'annual.html', context = {'annual': annual, 'additional_annual': additional_annual, 'sum_of_additional_expenses': sum_of_additional_expenses})
+    annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    sum_annual = 0
+    for expense in annual:
+        sum_annual += expense.amount
+    return render(request, 'annual.html', context = {'annual': annual, 'sum_annual': sum_annual})
 
 
 def annual_spreadsheet(request):
-    annual = Annual.objects.filter(user=request.user, date__year=datetime.date.today().year)
-    additional_annual = Additional_expenses.objects.filter(user=request.user, date__year=datetime.date.today().year)
-    return render(request, 'annual_spreadsheet.html', context = {'ass': annual, 'additional_annual': additional_annual})
+    annual = Expenses.objects.filter(user=request.user, category='annual', date__year=datetime.date.today().year)
+    month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    let_month_list = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return render(request, 'annual_spreadsheet.html', context = {'ass': annual, 'month_list': month_list, 'let_month_list': let_month_list, 'range': range(1,13), 'zip': zip(range(1,13),let_month_list)})
 
 
 def month_summary(request):
-    daily = Daily.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    monthly = Monthly.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    annual = Annual.objects.get(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     budget_sum = 0
     for budget in user_budget:
         budget_sum += budget.amount
-    sum_of_additional_daily = 0
-    sum_of_additional_monthly = 0
-    sum_of_additional_annual = 0
-    for expense in additional_expenses:
+    sum_daily = 0
+    sum_monthly = 0
+    sum_annual = 0
+    for expense in expenses:
         if expense.category == 'daily':
-            sum_of_additional_daily += expense.amount
+            sum_daily += expense.amount
         elif expense.category == 'monthly':
-            sum_of_additional_monthly += expense.amount
+            sum_monthly += expense.amount
         else:
-            sum_of_additional_annual += expense.amount
-    total_expenses = sum_of_additional_daily + sum_of_additional_monthly + sum_of_additional_annual + daily.sum_of_daily() + monthly.sum_of_monthly_expenses() + annual.sum_of_annual_expenses()
+            sum_annual += expense.amount
+    total_expenses = sum_daily + sum_monthly + sum_annual
     outcome = budget_sum - total_expenses
-    return render(request, 'month_summary.html', context = {'daily': daily, 'monthly': monthly, 'annual': annual, 'sum_of_additional_daily': sum_of_additional_daily, 'sum_of_additional_monthly': sum_of_additional_monthly, 'sum_of_additional_annual': sum_of_additional_annual, 'budget_sum': budget_sum, 'total_expenses': total_expenses, 'outcome': outcome})
+    return render(request, 'month_summary.html', context = {'sum_daily': sum_daily, 'sum_monthly': sum_monthly, 'sum_annual': sum_annual, 'budget_sum': budget_sum, 'total_expenses': total_expenses, 'outcome': outcome})
 
 
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
-    annual = Annual.objects.filter(user=request.user, date__year=datetime.date.today().year)
-    additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    field_names = map(attrgetter('name'), Annual._meta.get_fields())
+    # annual = Annual.objects.filter(user=request.user, date__year=datetime.date.today().year)
+    # additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    # field_names = map(attrgetter('name'), Annual._meta.get_fields())
     
     my_bot = ChatBot(name='PyBot', read_only=True, logic_adapters=['chatterbot.logic.MathematicalEvaluation', 'chatterbot.logic.BestMatch'])
 
@@ -210,7 +183,7 @@ def homepage(request):
                 # reply = 'shami'
             r_form.save()
             # return redirect('robot')
-            return render(request, 'homepage.html', context={'annual': field_names, 'bot': my_bot, 'bot_form': BotForm(), 'text': text, 'reply': reply, 'showdiv': True })
+            return render(request, 'homepage.html', context={'bot': my_bot, 'bot_form': BotForm(), 'text': text, 'reply': reply, 'showdiv': True})
 
     return render(request, 'homepage.html', context = {'date': date, 'bot_form': BotForm()})
 

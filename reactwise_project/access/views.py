@@ -13,5 +13,5 @@ def signup(request):
         if signup_form.is_valid():
             new_user = signup_form.save()
             login(request, new_user)
-            return redirect('forms')
+            return redirect('expenses_form')
     return render(request, 'signup.html', {'signup_form': signup_form})
