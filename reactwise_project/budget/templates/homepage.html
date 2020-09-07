@@ -29,25 +29,44 @@
     <div id="modal1" class="modal">
         <div class="modal-content">
             <img style="width: 170px; height: 170px;" src="{% static 'robot2.gif' %}" alt="waving robot">
-            <h4 id="info-modal-heading" class="center teal-text">How can I help?</h4>
-            <form method="post">
-                <!-- {{bot_form}}
+            <div class=" bot_reply">
+                {% if text %}
+                    <div id="text">
+                        <h6 class="teal-text">{{user.first_name|upper}}: {{text|upper}}</h6>
+                    </div>
+                {% endif %}
+                {% if reply %}
+                <div id="reply">
+                        <!-- {% if text == 'yoyo'%}
+                            <table>
+                                {% for expense in annual %}
+                                    <tr>
+                                        {{expense}}
+                                    </tr>
+                                {% endfor %}
+                                where would you like to take money from?
+                            </table>
+                        {% endif %} -->
+                    <h6 class="pink-text">BOT: {{reply|upper}}</h6>
+                </div>
+                {% endif %}
+            </div>
+            <form id="bot_form" method="post">
+                <tr>
+                    <input type="text" name="text" maxlength="150" placeholder="HOW CAN I HELP" required id="id_text">
+                </tr>
                 {% csrf_token %}
                 <div class="center">
-                    <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+                    <button class="btn waves-effect waves-light btn" type="submit" name="action">Submit
                         <i class="material-icons right">send</i>
                     </button>
                 </div>
             </form>
-            {% if showdiv %}
-                <div id="showRank">
-                    {{text}}
-                </div>
-            {% endif %} -->
         </div>
         <div class="modal-footer">
-            <a href="#" class="modal-close waves-effect btn-flat">Goodbye</a>
+            <a href="#" class="modal-close waves-effect btn-flat orange-text" onClick="window.location.reload();"><h4>GOODBYE</h4></a>
         </div>
     </div>
 </section>
+
 {% endblock content %}

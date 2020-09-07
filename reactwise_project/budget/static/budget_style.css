@@ -4,38 +4,6 @@
     color: teal;
 }
 
-.sum {
-    text-align: center;
-}
-
-.sum_div {
-    border: 5px solid gray;
-    border-radius: 12%;
-    margin-top: 50px;
-    text-align: center;
-    margin: auto;
-    width: 60%;
-}
-
-/* #total_weekly {
-    margin-left: 130px;
-}
-
-#total_monthly {
-    margin-right: 130px;
-} */
-
-/* .total_wrapper {
-    display: flex;
-    justify-content: space-around;
-} */
-
-/* .back_btn {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 100px;
-    padding: 40px 20px 40px 20px;
-} */
 
 img {
     height: 400px;
@@ -46,76 +14,6 @@ img {
     width: 50%;
 }
 
-/* .btn_style {
-    padding-left: 60px;
-    padding-right: 60px;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    font-size: 40px;
-} */
-
-.flip-card {
-    background-color: transparent;
-    width: 300px;
-    height: 300px;
-    perspective: 1000px;
-    margin-top: 50px;
-    margin-bottom: 100px;
-}
-  
-.flip-card-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-}
-  
-.flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-}
-  
-.flip-card-front, .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-}
-  
-.flip-card-front {
-    background-color: #bbb;
-    color: black;
-}
-  
-.flip-card-back {
-    background-color: teal;
-    color: white;
-    transform: rotateY(180deg);
-}
-
-.envelope_txt {
-    color: teal;
-    margin-top: 5px;
-    font-size: 30px;
-}
-
-/* #wrapper {
-    display: flex;
-    justify-content: space-around;
-
-} */
-
-/* .spent_info {
-    margin-top: 40px;
-} */
-
-/* #daily_submit {
-    margin-top: 20px;
-    margin-left: 100px;
-} */
 
 #homepage_form_center {
     margin-left: 20px;
@@ -135,4 +33,115 @@ img {
     border: 1px solid grey;
     height: 80px;
     width: 150px;
+}
+
+.mail {
+    width: 400px;
+    height: 250px;
+    background: #ff8789;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.mail:before{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid #ff393c;
+    border-top: 150px solid transparent;
+    border-bottom: 150px solid #ff393c;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 5;
+}
+
+.mail:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 200px solid #ff5355;
+    border-right: 200px solid transparent;
+    border-top: 150px solid transparent;
+    border-bottom: 150px solid #ff5355;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    z-index: 4;
+}
+
+.cover:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-left: 200px solid transparent;
+    border-right: 200px solid transparent;
+    border-top: 150px solid #ff8789;
+    border-bottom: 150px solid transparent;
+    z-index: 6;
+    transform-origin: top;
+    transform: rotateX(0deg);
+    transition: all 1s 1s ease;
+}
+
+.letter {
+    position: absolute;
+    z-index: 3;
+    top: 0px;
+    left: 10px;
+    background: teal;
+    width: 380px;
+    height: 250px;
+    border-radius: 20px;
+    transition: all 1s ease;
+}
+
+/* .letter h6 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 80px;
+    color: teal;
+    font-weight: 900;
+} */
+
+.mail:hover .cover:before {
+    transform: rotateX(180deg);
+    transition: all 1s ease;
+}
+
+.mail:hover .letter {
+    top: -150px;
+    transition: all 1s 1s ease;
+}
+
+.envelope_wrapper {
+    display: flex;
+    justify-content: space-around;
+}
+
+.writing {
+    padding-left: 100px;
+    color: pink;
+}
+
+#text {
+    display: flex;
+    justify-content: column;
+}
+
+#reply {
+    display: flex;
+    justify-content: column;
+}
+
+.modal { 
+    width: 20% !important ; 
+    height: 75% !important ; 
 }

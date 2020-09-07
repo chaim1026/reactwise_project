@@ -75,6 +75,15 @@ class Annual(models.Model):
     date = models.DateField(default=timezone.now)
 
 
+
+    # def __str__(self):
+    #     return f'{self}'
+
+
+    # def __repr__(self):
+    #     return f'{self}'
+
+
     def sum_of_annual_expenses(self):
         self.total_annual_expenses = self.property_tax + self.water + self.gas + self.electric + self.holidays + self.dental + self.eyecare + self.alternative_medicine + self.kids_gifts + self.couples_gifts + self.general_gifts + self.school_supplies + self.membership_fees + self.day_trips + self.couples_vacation + self.family_vacation + self.car_registration + self.car_test + self.car_repairs + self.extracurricular_activity + self.water_filter + self.extra_income + self.other_school_fees
         return self.total_annual_expenses
