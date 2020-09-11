@@ -11,7 +11,8 @@ import datetime
 from chatterbot import ChatBot 
 from chatterbot.trainers import ListTrainer
 from chatterbot.trainers import ChatterBotCorpusTrainer
-from operator import attrgetter
+from django.contrib.auth.decorators import login_required
+
 
 
 def get_sundays():
@@ -24,10 +25,12 @@ def get_sundays():
     return sun, next_sun
     
 
-
+@login_required
 def expenses_forms(request):
+    expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+
     if request.method == 'GET':
-        return render(request, 'expenses_form.html', context={'expenses_form': ExpensesForm()})
+        return render(request, 'expenses_form.html', context={'expenses': expenses, 'expenses_form': ExpensesForm()})
     
     if request.method == 'POST':
         expenses_form = ExpensesForm(request.POST)
@@ -38,10 +41,10 @@ def expenses_forms(request):
             return redirect('expenses_form')
         else:
             messages.error(request, 'Please correct the errors below.')
-            return render(request, 'expenses_form.html', context={'expenses_form': ExpensesForm()})
+            return render(request, 'expenses_form.html', context={'expenses': expenses, 'expenses_form': ExpensesForm()})
 
 
-
+@login_required
 def daily_spending(request):
     daily_info = Expenses.objects.filter(user= request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     sum_daily = 0
@@ -78,7 +81,7 @@ def daily_spending(request):
     return render(request, 'daily.html', context = {'daily_info': daily_info, 'weekly': weekly, 'full_weekly':full_weekly, 'chart': chart, 'spent_form': MoneySpentForm(), 'sum_of_spending': total_sum_monthly, 'sum_daily': sum_daily})
 
 
-
+@login_required
 def monthly_spending(request):
     monthly = Expenses.objects.filter(user= request.user, category='monthly', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     sum_monthly = 0
@@ -86,14 +89,14 @@ def monthly_spending(request):
         sum_monthly += expense.amount
     return render(request, 'monthly.html', context = {'monthly': monthly, 'sum_monthly': sum_monthly})
 
-
+@login_required
 def monthly_spreadsheet(request):
     monthly = Expenses.objects.filter(user=request.user, category='monthly', date__year=datetime.date.today().year)
     month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let_month_list = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return render(request, 'monthly_spreadsheet.html', context = {'mss': monthly, 'month_list': month_list, 'let_month_list': let_month_list, 'zip': zip(range(1,13),let_month_list)})
 
-
+@login_required
 def annual_spending(request):
     annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     sum_annual = 0
@@ -101,7 +104,7 @@ def annual_spending(request):
         sum_annual += expense.amount
     return render(request, 'annual.html', context = {'annual': annual, 'sum_annual': sum_annual})
 
-
+@login_required
 def annual_spreadsheet(request):
     annual = Expenses.objects.filter(user=request.user, category='annual', date__year=datetime.date.today().year)
     month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
@@ -109,6 +112,7 @@ def annual_spreadsheet(request):
     return render(request, 'annual_spreadsheet.html', context = {'ass': annual, 'month_list': month_list, 'let_month_list': let_month_list, 'range': range(1,13), 'zip': zip(range(1,13),let_month_list)})
 
 
+@login_required
 def month_summary(request):
     expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
@@ -129,46 +133,24 @@ def month_summary(request):
     outcome = budget_sum - total_expenses
     return render(request, 'month_summary.html', context = {'sum_daily': sum_daily, 'sum_monthly': sum_monthly, 'sum_annual': sum_annual, 'budget_sum': budget_sum, 'total_expenses': total_expenses, 'outcome': outcome})
 
-
+@login_required
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
-    # annual = Annual.objects.filter(user=request.user, date__year=datetime.date.today().year)
-    # additional_expenses = Additional_expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-    # field_names = map(attrgetter('name'), Annual._meta.get_fields())
-    
-    my_bot = ChatBot(name='PyBot', read_only=True, logic_adapters=['chatterbot.logic.MathematicalEvaluation', 'chatterbot.logic.BestMatch'])
-
-    small_talk = ['was there an unexpected expense?',
-        'hi there',
-        'how do you do?',
-        'how are you?',
-        'i\'m cool.',
-        'fine, you?',
-        'always cool',
-        'i\'m ok',
-        'glad to hear that',
-        'i feel awesome',
-        'excellent, glad to hear that',
-        'not so good',
-        'sorry to hear that.',
-        'what\'s your name?',
-        'i\'m pybot. ask me a math question, please.']
-
-    math_talk_1 = ['pythagorean theorem', 'a squared plus b squared equals c squared.']
-
-    math_talk_2 = ['law of cosines', 'c**2 = a**2 + b**2 - 2 * a * b * cos(gamma)']
-
-    list_trainer = ListTrainer(my_bot)
-
-    corpus_trainer = ChatterBotCorpusTrainer(my_bot)
-    corpus_trainer.train('chatterbot.corpus.english')
-
-    for item in (small_talk, math_talk_1, math_talk_2):
-        list_trainer.train(item)
+    annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    name_list = []
+    num_list = []
+    final_list = []
+    for expense in annual:
+        name_list.append(expense.name)
+    for expense in annual:
+        num_list.append(expense.amount)
+    for i, y in zip(name_list,num_list):
+        final_list.append(i+':  '+str(y))
 
     if request.method == "GET":
-        return render(request, 'homepage.html', context={'date': date, 'bot': my_bot, 'bot_form': BotForm(), 'showdiv': False})
+        return render(request, 'homepage.html', context={'n': name_list, 'date': date, 'bot_form': BotForm(), 'showdiv': False})
+     
 
     if request.method == "POST":
         robot_form = BotForm(request.POST)
@@ -176,18 +158,28 @@ def homepage(request):
             r_form = robot_form.save(commit=False)
             r_form.user = request.user
             text = r_form.text
-            reply = my_bot.get_response(text)
-            # if text == 'yoyo':
-            #     for expense in additional_annual:
-            #         reply = expense.name
-                # reply = 'shami'
+            if text == 'yes':
+                reply = 'HOW MUCH IS THE EXPENSE?'
+            elif text in name_list:
+                for expense in annual:
+                    if expense.name == text:
+                        amount_update = expense.amount
+                bot_txt = Bot.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+                for txt in bot_txt:
+                    num_deduct = txt.text
+                name_update = text
+                update = amount_update - int(num_deduct)
+                Expenses.objects.filter(user=request.user, category='annual', name=name_update, date__month=datetime.date.today().month, date__year=datetime.date.today().year).update(amount=update)
+                reply = 'ok just updated your expense do u have any other expenses?'.upper()           
+            else:
+                reply = '\n'.join(map(str, final_list)) +'\n'+'\n'+ 'Where would you like to deduct your expense' 
+                reply = reply.upper()
             r_form.save()
-            # return redirect('robot')
-            return render(request, 'homepage.html', context={'bot': my_bot, 'bot_form': BotForm(), 'text': text, 'reply': reply, 'showdiv': True})
+            return render(request, 'homepage.html', context={'n': name_list, 'annual': annual, 'bot_form': BotForm(), 'text': text, 'reply': reply, 'showdiv': True})
 
-    return render(request, 'homepage.html', context = {'date': date, 'bot_form': BotForm()})
+    return render(request, 'homepage.html', context = {'n': name_list, 'date': date, 'bot_form': BotForm(), 'd': deduct_from})
 
-
+@login_required
 def budget(request):
     user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     budget_sum = 0

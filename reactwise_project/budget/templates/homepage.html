@@ -30,26 +30,17 @@
         <div class="modal-content">
             <img style="width: 170px; height: 170px;" src="{% static 'robot2.gif' %}" alt="waving robot">
             <div class=" bot_reply">
-                {% if text %}
-                    <div id="text">
-                        <h6 class="teal-text">{{user.first_name|upper}}: {{text|upper}}</h6>
-                    </div>
+                {% if not text %}
+                <h6 class="orange-text center"><u>Unexpected Expense?(yes)</u></h6>
                 {% endif %}
-                {% if reply %}
-                <div id="reply">
-                        <!-- {% if text == 'yoyo'%}
-                            <table>
-                                {% for expense in annual %}
-                                    <tr>
-                                        {{expense}}
-                                    </tr>
-                                {% endfor %}
-                                where would you like to take money from?
-                            </table>
-                        {% endif %} -->
-                    <h6 class="pink-text">BOT: {{reply|upper}}</h6>
+                <!-- {% if reply %} -->
+                <h6 class="pink-text">BOT:{{reply|linebreaks}}</h6>
+                <!-- {% endif %} -->
+                <!-- {% if text %} -->
+                <div id="text">
+                    <h6 class="teal-text">{{user.first_name|upper}}: {{text|upper}}</h6>
                 </div>
-                {% endif %}
+                <!-- {% endif %} -->
             </div>
             <form id="bot_form" method="post">
                 <tr>
@@ -68,5 +59,4 @@
         </div>
     </div>
 </section>
-
 {% endblock content %}

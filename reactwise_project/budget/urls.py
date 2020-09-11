@@ -2,9 +2,7 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    # path('forms/', views.forms, name = 'forms'),
     path('Expenses-form/', views.expenses_forms, name='expenses_form'),
-    # path('additional-expenses-form/', views.additional_expenses_form, name = 'additional_expenses_form'),
     path('homepage/', views.homepage, name = 'homepage'),
     path('Daily-Spending/', views.daily_spending, name = 'daily'),
     path('Monthly-Spending/', views.monthly_spending, name = 'monthly'),

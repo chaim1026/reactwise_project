@@ -3,12 +3,18 @@
 
 
 {% block content %}
-    <h3 class="teal-text">DAILY TOTAL: {{sum_daily}}</h3>
-    <h3 class="teal-text">MONTHLY TOTAL: {{sum_monthly}}</h3>
-    <h3 class="teal-text">ANNUAL TOTAL: {{sum_annual}}</h3>
-    <h3 class="pink-text">TOTAL EXPENSES: {{total_expenses}}</h3>
-    <h3 class="grey-text">TOTAL INCOME: {{budget_sum}}</h3>
-    <h3 class="red-text">SURPLUS/DEFICIT: {{outcome}}</h3>
-    <h3 class="light-green-text">WEALTH BASKET:</h3>
-    <h3 class="purple-text">CUSHION:</h3>
+<div class="container center">
+    <h1 class="font teal-text">DAILY TOTAL: {{sum_daily}}</h1>
+    <h1 class="font teal-text">MONTHLY TOTAL: {{sum_monthly}}</h1>
+    <h1 class="font teal-text">ANNUAL TOTAL: {{sum_annual}}</h1>
+    <h1 class="font pink-text">TOTAL EXPENSES: {{total_expenses}}</h1>
+    <h1 class="font green-text">TOTAL INCOME: {{budget_sum}}</h1>
+    {% if outcome >= 0 %}
+        <h1 class="font green-text">SURPLUS: {{outcome}}</h1>
+    {% else%}
+        <h1 class="font red-text">DEFICIT: {{outcome}}</h1>
+    {% endif %}
+    <!-- <h1 class="light-green-text">WEALTH BASKET:</h1> -->
+    <!-- <h1 class="purple-text">CUSHION:</h1> -->
+</div>
 {% endblock content %}

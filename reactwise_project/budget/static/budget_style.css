@@ -24,6 +24,10 @@ img {
     width: 400px;
 }
 
+.m_btn {
+    margin-top: 30px;
+}
+
 .wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -32,13 +36,19 @@ img {
 .ss {
     border: 1px solid grey;
     height: 80px;
-    width: 160px;
+    width: 155px;
 }
 
 .ssi {
     border: 1px solid grey;
     height: 120px;
-    width: 160px;
+    width: 155px;
+}
+
+.wrapper {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center;
 }
 
 .m_size {
@@ -154,4 +164,10 @@ img {
 .modal { 
     width: 20% !important ; 
     height: 75% !important ; 
+}
+
+
+.font {
+    font-style: oblique; 
+    font-family: Apple Chancery, cursive;
 }

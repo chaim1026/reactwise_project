@@ -4,18 +4,17 @@
 {% block content %}
 
 <!-- Modal Trigger -->
-<div class="center">
+<div class="center m_btn">
 <a class="waves-effect waves-light btn-large modal-trigger pink" href="#modal1">FORM INPUT</a>
 </div>
 
 <!-- Modal Structure -->
 <div id="modal1" class="modal modal-fixed-footer">
 <div class="modal-content">
-    <h4>Modal Header</h4>
-    <p>A bunch of text</p>
+    {% include 'form_example.html'%}
 </div>
 <div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat">GOOD LUCK</a>
 </div>
 </div>
 
@@ -73,7 +72,67 @@
         </button>
      </div>
 </form>
-<div class="back_btn center" style="margin-top: 50px;">
+<div class="container center" style="margin-top: 30px;">
+    <div class="row">
+        <div class="wrapper">
+            <div class="col s4 ">
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th class="center orange-text"><u>DAILY</u></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            {% if expense.category == 'daily' %}
+                            <tr>   
+                                <td class="center">{{expense.name|upper}}</td>
+                            </tr> 
+                            {% endif %}              
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s4">
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th class="center orange-text"><u>MONTHLY</u></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            {% if expense.category == 'monthly' %}
+                            <tr>
+                                <td class="center">{{expense.name|upper}}</td>
+                            </tr> 
+                            {% endif %}               
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col s4">
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th class="center orange-text"><u>ANNUAL</u></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for expense in expenses %}
+                            {% if expense.category == 'annual' %}
+                            <tr>
+                                <td class="center">{{expense.name|upper}}</td>
+                            </tr> 
+                            {% endif %}               
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+    </div>
+</div>
+<div class="back_btn center" style="margin-top: 50px; margin-bottom: 25px;">
     <a class="waves-effect waves-light btn-large" href="{% url 'homepage' %}">WHEN YOUR FINISHED CLICK HERE</a>
 </div>
 

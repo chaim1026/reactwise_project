@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from budget.models import MoneySpent
+from django.contrib.auth.models import User
+from crum import get_current_user
 
 
 class Calendar(HTMLCalendar):
@@ -31,7 +33,7 @@ class Calendar(HTMLCalendar):
 	# formats a month as a table
 	# filter events by year and month
 	def formatmonth(self, withyear=True):
-		events = MoneySpent.objects.filter(date__year=self.year, date__month=self.month)
+		events = MoneySpent.objects.filter(user=get_current_user(), date__year=self.year, date__month=self.month)
 
 		cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
 		cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
