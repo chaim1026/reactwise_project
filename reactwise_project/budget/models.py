@@ -11,7 +11,7 @@ class Expenses(models.Model):
     category = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=timezone.now)
-
+    status = models.CharField(max_length=30, default='approved')
 
 
 class MoneySpent(models.Model):

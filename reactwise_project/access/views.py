@@ -3,6 +3,7 @@ from .forms import UserSignupForm
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.models import User
 
+
 def signup(request):
     if request.method == 'GET':    
         signup_form = UserSignupForm()

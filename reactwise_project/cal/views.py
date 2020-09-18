@@ -11,6 +11,7 @@ import calendar
 from datetime import timedelta
 
 
+
 class CalendarView(generic.ListView):
     model = MoneySpent
     template_name = 'calendar.html'

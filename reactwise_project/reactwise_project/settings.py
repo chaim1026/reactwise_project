@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'budget',
     'access',
     'welcome',
-    'embed_video',
+    # 'embed_video',
     'cal',
 ]
 
@@ -120,11 +120,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'homepage'
-LOGOUT_REDIRECT_URL = 'welcome'
-
-
 try:
     from .local_settings import *
 except ImportError:
     raise Exception('A settings_local.py is required to run this file.')
+
+LOGIN_REDIRECT_URL = 'homepage'
+LOGOUT_REDIRECT_URL = 'welcome'

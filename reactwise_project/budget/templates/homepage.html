@@ -32,6 +32,15 @@
             <div class=" bot_reply">
                 {% if not text %}
                 <h6 class="orange-text center"><u>Unexpected Expense?(yes)</u></h6>
+                <div class="center home_bot_btn">
+                    <button class="btn waves-effect waves-light btn pink orange-text" type="submit" name="action">Unexpected Expense</button>
+                </div>
+                <div class="center home_bot_btn">
+                    <button class="btn waves-effect waves-light btn orange teal-text" type="submit" name="action">Annual Expense Balance</button>
+                </div>
+                <div class="center home_bot_btn">
+                    <button class="btn waves-effect waves-light btn pink orange-text" type="submit" name="action">Annual Expense Spent</button>
+                </div>
                 {% endif %}
                 <!-- {% if reply %} -->
                 <h6 class="pink-text">BOT:{{reply|linebreaks}}</h6>

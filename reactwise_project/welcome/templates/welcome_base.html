@@ -7,7 +7,7 @@
     <title>Reactwise</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="{% static 'welcome.css' %}">
+    <link rel="stylesheet" href="/static/welcome.css?{% now "u" %}"/>
 </head>
 <body id="WELCOME" class="scrollspy">
     {% include 'welcome_navbar.html' %}
@@ -26,7 +26,7 @@
         const slider = document.querySelector('.slider');
         M.Slider.init(slider, {
             indicators: false,
-            height: 900,
+            height: 500,
             transition: 500,
             interval: 6000
         });

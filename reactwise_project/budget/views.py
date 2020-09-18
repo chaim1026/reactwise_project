@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 
 
 
+
 def get_sundays():
     today = datetime.date.today()
     idx = (today.weekday() + 1) % 7
@@ -27,7 +28,7 @@ def get_sundays():
 
 @login_required
 def expenses_forms(request):
-    expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    expenses = Expenses.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
 
     if request.method == 'GET':
         return render(request, 'expenses_form.html', context={'expenses': expenses, 'expenses_form': ExpensesForm()})
@@ -46,7 +47,7 @@ def expenses_forms(request):
 
 @login_required
 def daily_spending(request):
-    daily_info = Expenses.objects.filter(user= request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    daily_info = Expenses.objects.filter(user= request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
     sum_daily = 0
     weekly = 0
     for expense in daily_info:
@@ -83,7 +84,7 @@ def daily_spending(request):
 
 @login_required
 def monthly_spending(request):
-    monthly = Expenses.objects.filter(user= request.user, category='monthly', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    monthly = Expenses.objects.filter(user= request.user, category='monthly', date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
     sum_monthly = 0
     for expense in monthly:
         sum_monthly += expense.amount
@@ -91,14 +92,14 @@ def monthly_spending(request):
 
 @login_required
 def monthly_spreadsheet(request):
-    monthly = Expenses.objects.filter(user=request.user, category='monthly', date__year=datetime.date.today().year)
+    monthly = Expenses.objects.filter(user=request.user, category='monthly', date__year=datetime.date.today().year, status='approved')
     month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let_month_list = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return render(request, 'monthly_spreadsheet.html', context = {'mss': monthly, 'month_list': month_list, 'let_month_list': let_month_list, 'zip': zip(range(1,13),let_month_list)})
 
 @login_required
 def annual_spending(request):
-    annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
     sum_annual = 0
     for expense in annual:
         sum_annual += expense.amount
@@ -106,7 +107,7 @@ def annual_spending(request):
 
 @login_required
 def annual_spreadsheet(request):
-    annual = Expenses.objects.filter(user=request.user, category='annual', date__year=datetime.date.today().year)
+    annual = Expenses.objects.filter(user=request.user, category='annual', date__year=datetime.date.today().year, status='approved')
     month_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
     let_month_list = ['January', 'Febuary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return render(request, 'annual_spreadsheet.html', context = {'ass': annual, 'month_list': month_list, 'let_month_list': let_month_list, 'range': range(1,13), 'zip': zip(range(1,13),let_month_list)})
@@ -114,7 +115,7 @@ def annual_spreadsheet(request):
 
 @login_required
 def month_summary(request):
-    expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    expenses = Expenses.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
     user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     budget_sum = 0
     for budget in user_budget:

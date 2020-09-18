@@ -6,28 +6,28 @@
 <section class="slider">
     <ul class="slides">
       <li>
-        <img src="{% static 'bg_1.jpg' %}" alt="budget_pic"> <!-- random image -->
+        <img class="img" src="{% static 'bg_1.jpg' %}" alt="budget_pic"> <!-- random image -->
         <div class="caption center-align">
           <h3 class="orange-text text-darken-5">WELCOME TO REACTWISE BUDGETING FOR LIFE!</h3>
           <h5 class="light pink-text text-darken-7 hide-on-small-only">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Porro laborum eligendi ad delectus beatae. In illum molestiae et aut vitae?</h5>
         </div>
       </li>
       <li>
-        <img src="{% static 'Budget.png' %}" alt="budget_pic"> <!-- random image -->
+        <img class="img" src="{% static 'Budget.png' %}" alt="budget_pic"> <!-- random image -->
         <div class="caption left-align">
           <h3 class="orange-text text-darken-5">Left Aligned Caption</h3>
           <h5 class="light pink-text text-darken-7 hide-on-small-only">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Nam odit quidem provident sed veniam nihil adipisci corrupti numquam iste culpa.</h5>
         </div>
       </li>
       <li>
-        <img src="{% static 'budgeting-start-here(1).jpg' %}" alt="budget_pic"> <!-- random image -->
+        <img class="img" src="{% static 'budgeting-start-here(1).jpg' %}" alt="budget_pic"> <!-- random image -->
         <div class="caption right-align">
           <h3 class="orange-text text-darken-5">Right Aligned Caption</h3>
           <h5 class="light pink-text text-darken-7 hide-on-small-only">Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio doloribus natus asperiores, voluptatibus ipsam alias tempore nemo exercitationem omnis quos.</h5>
         </div>
       </li>
       <li>
-        <img src="{% static 'balancing-budget-rocks.jpg' %}" alt="budget_pic"> <!-- random image -->
+        <img class="img" src="{% static 'balancing-budget-rocks.jpg' %}" alt="budget_pic"> <!-- random image -->
         <div class="caption center-align">
           <h3 class="orange-text text-darken-5">This is our big Tagline!</h3>
           <h5 class="light pink-text text-darken-7 hide-on-small-only">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit quam eaque animi accusamus similique, repellendus ea nulla fuga nesciunt voluptas.</h5>
@@ -220,24 +220,36 @@
             <li class="collection-item">Beit Shemesh</li>
           </ul>
         </div>
-        <div class="col s12 m6">
-          <div class="card-panel grey lighten-3">
-            <h5>Please fill out this form</h5>
-            <div class="input-field">
-              <input type="text" placeholder="Name">
+        <form method="POST">
+          <div class="col s12 m6">
+            <div class="card-panel grey lighten-3">
+              <h5>Please fill out this form</h5>
+              {% for field in contact_form %}
+              <div class="input-field">
+                {{field}}
+              </div>
+              {% endfor %}
+              {% comment %}
+              <!-- <div class="input-field">
+                {{contact_form.email}}
+              </div>
+              <div class="input-field">
+                {{contact_form.phone}}
+              </div>
+              <div class="input-field">
+                {#<textarea class="materialize-textarea" placeholder="Enter Message"></textarea>#}
+                {{contact_form.text}}
+              </div> -->
+              {% endcomment %}
+              {% csrf_token %}
+              <div class="center">
+                <button class="btn waves-effect waves-light btn-large" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+             </div>
             </div>
-            <div class="input-field">
-              <input type="text" placeholder="Email">
-            </div>
-            <div class="input-field">
-              <input type="text" placeholder="Phone">
-            </div>
-            <div class="input-field">
-              <textarea class="materialize-textarea" placeholder="Enter Message"></textarea>
-            </div>
-            <input type="submit" value="submit" class="btn">
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
