@@ -1,17 +1,19 @@
 from django.shortcuts import render, redirect
-from .models import Expenses, MoneySpent, Budget, Bot
+from .models import Expenses, MoneySpent, Budget, Bot, BotUnexpectedExpense, BotExpenseBalance, BotExpenseInput
 from django.contrib.auth.models import User
-from .forms import ExpensesForm, MoneySpentForm, BudgetForm, BotForm
+from .forms import ExpensesForm, MoneySpentForm, BudgetForm, BotForm, BotUnexpectedExpenseForm, BotExpenseBalanceForm, BotExpenseInputForm
 from django.contrib import messages
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from django.db.models import Avg, Max, Min, Sum
 from django.db.models.functions import Coalesce
 import datetime
+from django.utils import timezone
 from chatterbot import ChatBot 
 from chatterbot.trainers import ListTrainer
 from chatterbot.trainers import ChatterBotCorpusTrainer
 from django.contrib.auth.decorators import login_required
+from .bot import *
 
 
 
@@ -138,47 +140,54 @@ def month_summary(request):
 def homepage(request):
     date = datetime.datetime.today().day   
     messages.info(request, 'Please fill out your new forms')
-    annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
+    cat_3 = Expenses.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     name_list = []
     num_list = []
     final_list = []
-    for expense in annual:
+    for expense in cat_3:
         name_list.append(expense.name)
-    for expense in annual:
+    for expense in cat_3:
         num_list.append(expense.amount)
     for i, y in zip(name_list,num_list):
         final_list.append(i+':  '+str(y))
 
     if request.method == "GET":
-        return render(request, 'homepage.html', context={'n': name_list, 'date': date, 'bot_form': BotForm(), 'showdiv': False})
+        return render(request, 'homepage.html', context={'n': name_list, 'date': date, 'bot_form': BotForm(), 'ue_form': BotUnexpectedExpenseForm(), 'eb_form': BotExpenseBalanceForm(), 'ei_form': BotExpenseInputForm(), 'cat_3': cat_3})
      
-
+    ei_name = ''
     if request.method == "POST":
         robot_form = BotForm(request.POST)
-        if robot_form.is_valid():
+        ue = BotUnexpectedExpenseForm(request.POST)
+        eb = BotExpenseBalanceForm(request.POST)
+        ei = BotExpenseInputForm(request.POST)
+        if robot_form.is_valid() and ue.is_valid() and eb.is_valid() and ei.is_valid():
             r_form = robot_form.save(commit=False)
+            bue = ue.save(commit=False)
+            beb = eb.save(commit=False)
+            bei = ei.save(commit=False)
             r_form.user = request.user
-            text = r_form.text
-            if text == 'yes':
-                reply = 'HOW MUCH IS THE EXPENSE?'
-            elif text in name_list:
-                for expense in annual:
-                    if expense.name == text:
-                        amount_update = expense.amount
-                bot_txt = Bot.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
-                for txt in bot_txt:
-                    num_deduct = txt.text
-                name_update = text
-                update = amount_update - int(num_deduct)
-                Expenses.objects.filter(user=request.user, category='annual', name=name_update, date__month=datetime.date.today().month, date__year=datetime.date.today().year).update(amount=update)
-                reply = 'ok just updated your expense do u have any other expenses?'.upper()           
-            else:
-                reply = '\n'.join(map(str, final_list)) +'\n'+'\n'+ 'Where would you like to deduct your expense' 
-                reply = reply.upper()
-            r_form.save()
-            return render(request, 'homepage.html', context={'n': name_list, 'annual': annual, 'bot_form': BotForm(), 'text': text, 'reply': reply, 'showdiv': True})
+            bue.user = request.user
+            beb.user = request.user
+            eb_text = beb.text
+            if eb_text in name_list:
+                annual_expenses = Expenses.objects.filter(user=get_current_user(), name=eb_text, category='annual', status='approved').aggregate(Sum('amount'))
+                reply = annual_expenses['amount__sum']
+            elif eb_text not in name_list:
+                reply = 'Expense does not exist'
+            bei.user = request.user
+            ei_text = bei.text
+            if ei_text in name_list:
+                ei_name = ei_text
+                reply = 'How much was spent?'
+                print(ei_name)
+            elif type(int(ei_text)) is int:
+                input_spent = Expenses(name=ei_name, amount=-(int(ei_text)), category='annual', date=timezone.now(), user=request.user, status='approved') 
+                input_spent.save()
+            r_form.save() or bue.save()
+            return render(request, 'homepage.html', context={'n': name_list, 'annual': annual, 'bot_form': BotForm(), 'ue_form': BotUnexpectedExpenseForm(), 'eb_form': BotExpenseBalanceForm(), 'ei_form': BotExpenseInputForm(), 'cat_3': cat_3, 'reply': reply, 'text': eb_text})
 
-    return render(request, 'homepage.html', context = {'n': name_list, 'date': date, 'bot_form': BotForm(), 'd': deduct_from})
+    return render(request, 'homepage.html', context = {'n': name_list, 'date': date})
+
 
 @login_required
 def budget(request):

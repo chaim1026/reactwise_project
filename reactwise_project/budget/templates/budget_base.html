@@ -46,19 +46,71 @@
         }
 
         $(function() {
-            $('#bot_form').submit(function(e) {
+            $('#eb_form').submit(function(e) {
                 e.preventDefault();
 
                 $form = $(this);
 
                 $.post(document.location.url, $(this).serialize(), function(data) {
-                   $botReply = $('<div>').html(data).find('.bot_reply');
+                   $ebReply = $('<div>').html(data).find('.eb_reply');
 
-                   $form.prepend($botReply)[0].reset();
+                   $form.prepend($ebReply)[0].reset();
                 })
 
             })
         })
+
+        $(function() {
+            $('#ei_form').submit(function(e) {
+                e.preventDefault();
+
+                $form = $(this);
+
+                $.post(document.location.url, $(this).serialize(), function(data) {
+                   $ebReply = $('<div>').html(data).find('.ei_reply');
+
+                   $form.prepend($ebReply)[0].reset();
+                })
+
+            })
+        })
+
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            }
+
+        function ueApear() {
+            var x = document.getElementById("ue");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function ebApear() {
+            var x = document.getElementById("eb");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
+        function eiApear() {
+            var x = document.getElementById("ei");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+
     </script>
 </body>
 </html>

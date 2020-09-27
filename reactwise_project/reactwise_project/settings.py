@@ -41,6 +41,11 @@ INSTALLED_APPS = [
     'welcome',
     # 'embed_video',
     'cal',
+    'django_crontab',
+]
+
+CRONJOBS = [
+    ('* * 1 * *', 'budget.cron.my_cron_job')
 ]
 
 MIDDLEWARE = [
