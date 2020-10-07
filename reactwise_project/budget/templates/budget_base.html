@@ -12,6 +12,23 @@
 <body>
     {% include 'budget_navbar.html' %}
     
+    {% if disapproved %}
+        {% if messages %}
+            {% for message in messages|slice:":1" %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
+                    <div class="center info-message">
+                        <div>{{ message }}</div>
+                        <div>
+                            <form method="get" action="#">
+                                <button class="waves-effect waves-light btn-large" name="cat_3_moved" value="cat_3_moved">YES</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    {% endif %}
+
     {% block content %}
     {% endblock content %}
     <div class="fixed-action-btn">
@@ -44,6 +61,21 @@
             var instance = M.Modal.getInstance($('#modal1'))
             instance.open()
         }
+
+        $(function() {
+            $('#ue_form').submit(function(e) {
+                e.preventDefault();
+
+                $form = $(this);
+
+                $.post(document.location.url, $(this).serialize(), function(data) {
+                   $ebReply = $('<div>').html(data).find('.ue_reply');
+
+                   $form.prepend($ebReply)[0].reset();
+                })
+
+            })
+        })
 
         $(function() {
             $('#eb_form').submit(function(e) {

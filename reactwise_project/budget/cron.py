@@ -8,26 +8,25 @@ from .models import Expenses
 from crum import get_current_user
 from django.utils import timezone
 import datetime
+from django.contrib.auth.models import User
+from .models import Expenses
 
 
-# if its the new year fix that 
+
 def my_cron_job():
-    # for user in users
-    if statement
-    expenses = Expenses.objects.filter(category='annual', date__month=(datetime.date.today().month - 1), date__year=datetime.date.today().year)
-    for expense in expenses:
-        new_expense = expense
-        new_expense.pk = None
-        new_expense.status = 'disapproved'
-        new_expense.date = timezone.now()
-        new_expense.save()
-
-
-
-
-
-
-
-
-# code that asks the user if he moved over the annual and if yes changes the newly added annual expenses from disapproved to approved
-
+    users = User.objects.all()
+    for user in users:
+        if datetime.date.today().month == 1:
+            year = (datetime.date.today().year - 1)
+            month = 12
+        else:
+            year = datetime.date.today().year
+            month = (datetime.date.today().month - 1)
+        expenses = Expenses.objects.filter(user=user.id, category='annual', date__month=month, date__year=year)
+        for expense in expenses:
+            if expense.amount > 0:
+                new_expense = expense
+                new_expense.pk = None
+                new_expense.status = 'disapproved'
+                new_expense.date = timezone.now()
+                new_expense.save()

@@ -12,7 +12,9 @@
             <div>
                 {% for month in ass %}
                     {% if month.date.month == i %}
-                        <div class="teal center ssi"><h5><div class="pink-text">{{month.name}}</div><div class="white-text">{{month.amount}}</div></h5></div>
+                        {% if month.amount > 0 %}
+                            <div class="teal center ssi"><h5><div class="pink-text">{{month.name}}</div><div class="white-text">{{month.amount}}</div></h5></div>
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             </div>

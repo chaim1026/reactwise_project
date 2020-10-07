@@ -120,7 +120,7 @@
                     </thead>
                     <tbody>
                         {% for expense in expenses %}
-                            {% if expense.category == 'annual' %}
+                            {% if expense.category == 'annual' and expense.amount > 0 %}
                             <tr>
                                 <td class="center">{{expense.name|upper}}</td>
                             </tr> 

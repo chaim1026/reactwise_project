@@ -8,7 +8,7 @@ class ExpensesForm(forms.ModelForm):
     class Meta:      
         model = Expenses
         fields = '__all__'
-        exclude = ['user', 'date', 'approved']
+        exclude = ['user', 'date', 'status']
 
 
 class MoneySpentForm(forms.ModelForm):

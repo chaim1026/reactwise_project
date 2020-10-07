@@ -175,3 +175,23 @@ img {
 .home_bot_btn {
     margin-top: 5px;
 }
+
+.blinking{
+    animation:blinkingText 2s infinite;
+}
+@keyframes blinkingText{
+    0%{     color: #00b894;    }
+    49%{    color: #00b894; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #00b894;    }
+}
+
+.info-message {
+    display: flex;
+    justify-content: space-around;
+    border: 5px solid red;
+    background-color: red;
+    font-size: 40px;
+    color: whitesmoke;
+}

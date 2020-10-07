@@ -3,27 +3,16 @@
 
 {% block content %}
 
-<h1 style="text-align: center; color: teal; font-size: 60px; margin-top: 50px;">WELCOME {{user.first_name|upper}} TO REACTWISE</h1>
-
-{% if date == 1 %}
-    {% if messages %}
-    <ul class="messages">
-        {% for message in messages %}
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}
-                <div class="info-message">{{ message }}</div>
-            {% endif %}
-        {% endfor %}
-    </ul>
-    {% endif %}
-
-    <div id="homepage_form_center">
-        <a class="waves-effect waves-light btn-large" href="{% url 'expenses_form' %}">FORMS</a>
-    </div>
+{% if hour >= 0 and hour < 12 %}
+    <h1 class="center teal-text"><div>GOOD MORNING {{user.first_name|upper}},</div><div>WELCOME BACK TO REACTWISE</div></h1>
+{% elif hour >= 12 and hour < 18 %}
+    <h1 class="center teal-text"><div>GOOD AFTERNOON {{user.first_name|upper}},</div><div>WELCOME BACK TO REACTWISE</div></h1>
+{% elif hour >= 18 and hour or hour == 0 %}
+    <h1 class="center teal-text"><div>GOOD EVENING {{user.first_name|upper}},</div><div>WELCOME BACK TO REACTWISE</div></h1>
 {% endif %}
 
 <a href="#" onclick="toggleModal();"><img src="{% static 'robot2.gif' %}" alt="waving robot"></a>
-<h1 style="text-align: center;">CLICK ME FOR HELP</h1>
-
+<h1 class="center teal-text">CLICK ME FOR HELP</h1>
 
 <section class="infomodal">
     <div id="modal1" class="modal">
@@ -46,18 +35,29 @@
                 <h5 class="teal-text"><u>CAT 3</u></h5>
                 <div>
                     {% for expense in cat_3 %}
-                        {% if expense.category == 'annual' %}
+                        {% if expense.category == 'annual' and expense.amount > 0 %}
                             <h6 class="orange-text">{{expense.name|upper}}</h6>
                         {% endif %}
                     {% endfor %}
+                    <h5 class="pink-text"><div>Let's sort this out!</div><div>How much is the expense?</div></h5>
+                    <div class="ue_reply">
+                        {% if ue_text %}
+                        <h5 class="orange-text">{{user.first_name|upper}}: {{ue_text|upper}}</h5>
+                        {% endif %}
+                        {% if ue_reply %}
+                        <div>
+                        <h5 class="teal-text">BOT: {{ue_reply}}</h5>
+                        </div>
+                        {% endif %}
+                    </div>
                 </div>
-                <form method="post">
+                <form id="ue_form" method="post">
                     <div class="center" style="display: flex; justify-content: space-around; margin-top: 20px;">                       
                         <div>
-                            <input type="text" name="text" maxlength="150" required id="id_text">
+                            <input type="text" name="ue_text" maxlength="150" required id="id_text">
                         </div>   
                         <div class="center">
-                            <button class="btn waves-effect waves-light btn" type="submit" name="action">
+                            <button class="btn waves-effect waves-light btn" type="submit" name="ue_btn">
                                 <i class="material-icons center">send</i>
                             </button>
                         </div>                     
@@ -71,18 +71,18 @@
             <div class="center home_bot_btn aeb_btn" id="eb" style="display: none;">
                 <div>
                     {% for expense in cat_3 %}
-                        {% if expense.category == 'annual' %}
+                        {% if expense.category == 'annual' and expense.amount > 0 %}
                             <h6 class="pink-text">{{expense.name|upper}}</h6>
                         {% endif%}
                     {% endfor %}
-                    <h6 class="orange-text">Which expense balance would you like to see?</h6>
+                    <h5 class="orange-text">Which expense balance would you like to see?</h5>
                     <div class="eb_reply">
-                        {% if text %}
-                        <h5 class="pink-text">{{user.first_name|upper}}: {{text|upper}}</h5>
+                        {% if eb_text %}
+                        <h5 class="pink-text">{{user.first_name|upper}}: {{eb_text|upper}}</h5>
                         {% endif %}
-                        {% if reply %}
+                        {% if eb_reply %}
                         <div>
-                        <h5 class="teal-text">BOT: {{reply}}</h5>
+                        <h5 class="teal-text">BOT: {{eb_reply}}</h5>
                         </div>
                         {% endif %}
                     </div>
@@ -90,10 +90,10 @@
                 <form id="eb_form" method="post">
                     <div class="center" style="display: flex; justify-content: space-around; margin-top: 20px;">                       
                         <div>
-                            <input type="text" name="text" maxlength="150" required id="id_text">
+                            <input type="text" name="eb_text" maxlength="150" required id="id_text">
                         </div>   
                         <div class="center">
-                            <button class="btn waves-effect waves-light btn" type="submit" name="action">
+                            <button class="btn waves-effect waves-light btn" type="submit" name="eb_btn">
                                 <i class="material-icons center">send</i>
                             </button>
                         </div>                     
@@ -107,18 +107,18 @@
             <div class="center home_bot_btn aes_btn" id="ei" style="display: none;">
                 <div>
                     {% for expense in cat_3 %}
-                        {% if expense.category == 'annual' %}
+                        {% if expense.category == 'annual' and expense.amount > 0 %}
                             <h6 class="teal-text">{{expense.name|upper}}</h6>
                         {% endif %}
                     {% endfor %}
-                    <h6 class="orange-text">Which expense would you like to update?</h6>
+                    <h5 class="orange-text">Which expense would you like to update?</h5>
                     <div class="ei_reply">
-                        {% if text %}
-                        <h5 class="pink-text">{{user.first_name|upper}}: {{text|upper}}</h5>
+                        {% if ei_text %}
+                        <h5 class="pink-text">{{user.first_name|upper}}: {{ei_text|upper}}</h5>
                         {% endif %}
-                        {% if reply %}
+                        {% if ei_reply %}
                         <div>
-                        <h5 class="teal-text">BOT: {{reply}}</h5>
+                        <h5 class="teal-text">BOT: {{ei_reply}}</h5>
                         </div>
                         {% endif %}
                     </div>
@@ -126,10 +126,10 @@
                 <form id="ei_form" method="post">
                     <div class="center" style="display: flex; justify-content: space-around; margin-top: 20px;">                       
                         <div>
-                            <input type="text" name="text" maxlength="150" required id="id_text">
+                            <input type="text" name="ei_text" maxlength="150" required id="id_text">
                         </div>   
                         <div class="center">
-                            <button class="btn waves-effect waves-light btn" type="submit" name="action">
+                            <button class="btn waves-effect waves-light btn" type="submit" name="ei_btn">
                                 <i class="material-icons center">send</i>
                             </button>
                         </div>                     

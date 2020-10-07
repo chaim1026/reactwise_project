@@ -36,19 +36,19 @@ class Bot(models.Model):
 
 
 class BotUnexpectedExpense(models.Model):
-    text = models.CharField(max_length=150)
+    ue_text = models.CharField(max_length=150)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=timezone.now)
 
 
 class BotExpenseBalance(models.Model):
-    text = models.CharField(max_length=150)
+    eb_text = models.CharField(max_length=150)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=timezone.now)
 
 
 class BotExpenseInput(models.Model):
-    text = models.CharField(max_length=150)
+    ei_text = models.CharField(max_length=150)
     user = models.ForeignKey(User, on_delete = models.PROTECT)
     date = models.DateField(default=timezone.now)
 
