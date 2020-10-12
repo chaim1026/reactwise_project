@@ -38,7 +38,7 @@ def get_sundays():
 @login_required
 def expenses_forms(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     expenses = Expenses.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
 
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
@@ -62,7 +62,7 @@ def expenses_forms(request):
 @login_required
 def daily_spending(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
 
     daily_info = Expenses.objects.filter(user= request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year, status='approved')
     sum_daily = 0
@@ -106,7 +106,7 @@ def daily_spending(request):
 @login_required
 def monthly_spending(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
 
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
@@ -120,7 +120,7 @@ def monthly_spending(request):
 @login_required
 def monthly_spreadsheet(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
 
@@ -132,7 +132,7 @@ def monthly_spreadsheet(request):
 @login_required
 def annual_spending(request):
     disapproved = form_update() 
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
 
@@ -145,7 +145,7 @@ def annual_spending(request):
 @login_required
 def annual_spreadsheet(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
 
@@ -158,7 +158,7 @@ def annual_spreadsheet(request):
 @login_required
 def month_summary(request):
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
 
@@ -194,7 +194,7 @@ def homepage(request):
     global ue_deducted
     global ue_category
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     cat_3 = Expenses.objects.filter(user=request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     daily = Expenses.objects.filter(user=request.user, category='daily', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     annual = Expenses.objects.filter(user=request.user, category='annual', date__month=datetime.date.today().month, date__year=datetime.date.today().year)
@@ -280,7 +280,7 @@ def budget(request):
     user_budget = Budget.objects.filter(user= request.user, date__month=datetime.date.today().month, date__year=datetime.date.today().year)
     budget_sum = 0
     disapproved = form_update()
-    messages.info(request, 'Have you transfered your cat 3?')
+    messages.info(request, 'Have you made your monthly transfer to category 3?')
     if request.GET.get('cat_3_moved') == 'cat_3_moved':
         to_approved()
 

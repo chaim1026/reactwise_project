@@ -71,7 +71,7 @@
                 $.post(document.location.url, $(this).serialize(), function(data) {
                    $ebReply = $('<div>').html(data).find('.ue_reply');
 
-                   $form.prepend($ebReply)[0].reset();
+                   $form.append($ebReply)[0].reset();
                 })
 
             })

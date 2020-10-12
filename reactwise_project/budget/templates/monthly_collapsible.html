@@ -4,10 +4,12 @@
         <div class="col s4 offset-s4">
             <ul class="collapsible popout">
                 {% for expense in monthly%}
-                <li>
-                    <div class="collapsible-header"><span class="teal-text center">{{expense.name|upper}}</span></div>
-                    <div class="collapsible-body"><span class="pink-text">{{expense.amount}}</span></div>
-                </li>
+                    {% if expense.amount > 0 %}
+                        <li>
+                            <div class="collapsible-header"><span class="teal-text center">{{expense.name|upper}}</span></div>
+                            <div class="collapsible-body"><span class="pink-text">{{expense.amount}}</span></div>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         </div>
